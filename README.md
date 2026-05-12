@@ -6,12 +6,12 @@ Aplikasi manajemen tagihan berbasis web untuk membantu pengguna mencatat, memant
 
 ## 🧱 Tech Stack
 
-| Layer     | Teknologi                         |
-|-----------|-----------------------------------|
-| Frontend  | Vue.js 3, Vite, Pinia, Vue Router |
-| Backend   | Spring Boot 3, Spring Security, JWT |
-| Database  | PostgreSQL                        |
-| Build     | Maven (backend), npm (frontend)   |
+| Layer    | Teknologi                           |
+| -------- | ----------------------------------- |
+| Frontend | Vue.js 3, Vite, Pinia, Vue Router   |
+| Backend  | Spring Boot 3, Spring Security, JWT |
+| Database | PostgreSQL                          |
+| Build    | Maven (backend), npm (frontend)     |
 
 ---
 
@@ -60,13 +60,13 @@ Bill-Reminder-Application/
 
 Pastikan software berikut sudah terinstall:
 
-| Software        | Versi Minimum | Cek Instalasi        |
-|-----------------|--------------|----------------------|
-| Java JDK        | 17+          | `java -version`      |
-| Apache Maven    | 3.8+         | `mvn -version`       |
-| Node.js         | 18+          | `node -version`      |
-| npm             | 9+           | `npm -version`       |
-| PostgreSQL      | 14+          | `psql --version`     |
+| Software     | Versi Minimum | Cek Instalasi    |
+| ------------ | ------------- | ---------------- |
+| Java JDK     | 17+           | `java -version`  |
+| Apache Maven | 3.8+          | `mvn -version`   |
+| Node.js      | 18+           | `node -version`  |
+| npm          | 9+            | `npm -version`   |
+| PostgreSQL   | 14+           | `psql --version` |
 
 ---
 
@@ -128,7 +128,7 @@ mvn clean package -DskipTests
 mvn spring-boot:run
 ```
 
-Backend akan berjalan di: **http://localhost:8080**
+Backend akan berjalan di: **http://localhost:8081**
 
 ---
 
@@ -154,7 +154,7 @@ npm run dev
 
 Frontend akan berjalan di: **http://localhost:5173**
 
-> Vite sudah dikonfigurasi untuk **proxy** request `/api` ke `http://localhost:8080`, jadi tidak perlu konfigurasi CORS tambahan saat development.
+> Vite sudah dikonfigurasi untuk **proxy** request `/api` ke `http://localhost:8081`, jadi tidak perlu konfigurasi CORS tambahan saat development.
 
 ---
 
@@ -181,50 +181,55 @@ npm run build
 ## 🌐 API Endpoints
 
 ### Auth
-| Method | Endpoint              | Deskripsi          |
-|--------|-----------------------|--------------------|
-| POST   | `/api/auth/register`  | Daftar akun baru   |
-| POST   | `/api/auth/login`     | Login & dapatkan JWT |
-| GET    | `/api/auth/me`        | Info user saat ini |
+
+| Method | Endpoint             | Deskripsi            |
+| ------ | -------------------- | -------------------- |
+| POST   | `/api/auth/register` | Daftar akun baru     |
+| POST   | `/api/auth/login`    | Login & dapatkan JWT |
+| GET    | `/api/auth/me`       | Info user saat ini   |
 
 ### Bills
-| Method | Endpoint                      | Deskripsi                     |
-|--------|-------------------------------|-------------------------------|
-| GET    | `/api/bills`                  | Daftar semua tagihan          |
-| GET    | `/api/bills?status=OVERDUE`   | Filter berdasarkan status     |
-| GET    | `/api/bills/{id}`             | Detail tagihan                |
-| POST   | `/api/bills`                  | Buat tagihan baru             |
-| PUT    | `/api/bills/{id}`             | Update tagihan                |
-| DELETE | `/api/bills/{id}`             | Hapus tagihan                 |
-| PATCH  | `/api/bills/{id}/mark-paid`   | Tandai tagihan sebagai lunas  |
+
+| Method | Endpoint                    | Deskripsi                    |
+| ------ | --------------------------- | ---------------------------- |
+| GET    | `/api/bills`                | Daftar semua tagihan         |
+| GET    | `/api/bills?status=OVERDUE` | Filter berdasarkan status    |
+| GET    | `/api/bills/{id}`           | Detail tagihan               |
+| POST   | `/api/bills`                | Buat tagihan baru            |
+| PUT    | `/api/bills/{id}`           | Update tagihan               |
+| DELETE | `/api/bills/{id}`           | Hapus tagihan                |
+| PATCH  | `/api/bills/{id}/mark-paid` | Tandai tagihan sebagai lunas |
 
 ### Payments
-| Method | Endpoint           | Deskripsi                |
-|--------|--------------------|--------------------------|
-| GET    | `/api/payments`    | Riwayat semua pembayaran |
-| GET    | `/api/payments/{id}` | Detail pembayaran      |
-| POST   | `/api/payments`    | Catat pembayaran baru    |
+
+| Method | Endpoint             | Deskripsi                |
+| ------ | -------------------- | ------------------------ |
+| GET    | `/api/payments`      | Riwayat semua pembayaran |
+| GET    | `/api/payments/{id}` | Detail pembayaran        |
+| POST   | `/api/payments`      | Catat pembayaran baru    |
 
 ### Dashboard
-| Method | Endpoint                          | Deskripsi                        |
-|--------|-----------------------------------|----------------------------------|
-| GET    | `/api/dashboard/summary`          | Ringkasan tagihan bulan ini      |
-| GET    | `/api/dashboard/upcoming-bills`   | Tagihan mendekati jatuh tempo    |
+
+| Method | Endpoint                        | Deskripsi                     |
+| ------ | ------------------------------- | ----------------------------- |
+| GET    | `/api/dashboard/summary`        | Ringkasan tagihan bulan ini   |
+| GET    | `/api/dashboard/upcoming-bills` | Tagihan mendekati jatuh tempo |
 
 ### Notifications
-| Method | Endpoint                              | Deskripsi                    |
-|--------|---------------------------------------|------------------------------|
-| GET    | `/api/notifications`                  | Semua notifikasi             |
-| GET    | `/api/notifications/unread`           | Notifikasi belum dibaca      |
-| PATCH  | `/api/notifications/mark-all-read`    | Tandai semua sudah dibaca    |
-| PATCH  | `/api/notifications/{id}/read`        | Tandai satu notifikasi dibaca |
+
+| Method | Endpoint                           | Deskripsi                     |
+| ------ | ---------------------------------- | ----------------------------- |
+| GET    | `/api/notifications`               | Semua notifikasi              |
+| GET    | `/api/notifications/unread`        | Notifikasi belum dibaca       |
+| PATCH  | `/api/notifications/mark-all-read` | Tandai semua sudah dibaca     |
+| PATCH  | `/api/notifications/{id}/read`     | Tandai satu notifikasi dibaca |
 
 ---
 
 ## 🔑 Status Tagihan
 
 | Status     | Keterangan                         |
-|------------|------------------------------------|
+| ---------- | ---------------------------------- |
 | `UPCOMING` | Belum mendekati jatuh tempo        |
 | `DUE_SOON` | Dalam 7 hari ke depan              |
 | `OVERDUE`  | Sudah melewati tanggal jatuh tempo |
@@ -245,11 +250,13 @@ Scheduler berjalan setiap hari **pukul 08:00** secara otomatis:
 ## 🐛 Troubleshooting
 
 **Backend gagal connect ke database**
+
 ```
 Pastikan PostgreSQL berjalan dan kredensial di application.properties sudah benar.
 ```
 
 **Error `Port 8080 already in use`**
+
 ```bash
 # Linux/Mac
 lsof -i :8080
@@ -261,11 +268,13 @@ taskkill /PID <PID> /F
 ```
 
 **Error `Port 5173 already in use`**
+
 ```bash
 npm run dev -- --port 5174
 ```
 
 **Email reminder tidak terkirim**
+
 ```
 Pastikan App Password Gmail sudah diaktifkan dan dikonfigurasi di application.properties.
 Pastikan juga koneksi internet tersedia di server.
