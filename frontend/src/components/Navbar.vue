@@ -208,4 +208,86 @@ function formatDate(dt) {
 .notif-msg { font-size: 13px; color: #374151; line-height: 1.4; }
 .notif-time { font-size: 11px; color: #9ca3af; margin-top: 4px; }
 .notif-empty { padding: 24px; text-align: center; color: #9ca3af; font-size: 14px; }
+@media (max-width: 1024px) {
+  .navbar {
+    padding: 0 16px;
+    gap: 12px;
+  }
+
+  .brand-name {
+    font-size: 16px;
+  }
+
+  .nav-link {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .user-name {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    height: auto;
+    min-height: 64px;
+    padding: 10px 12px;
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+
+  .navbar-brand {
+    margin-right: auto;
+  }
+
+  .navbar-links {
+    order: 3;
+    flex: 1 1 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 2px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .navbar-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-link {
+    flex-shrink: 0;
+  }
+
+  .navbar-right {
+    gap: 10px;
+  }
+
+  .user-menu {
+    gap: 8px;
+  }
+
+  .notif-dropdown {
+    left: 12px;
+    right: 12px;
+    width: auto;
+    top: 126px;
+    max-height: min(65vh, 480px);
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-name {
+    font-size: 15px;
+  }
+
+  .nav-link {
+    font-size: 12px;
+    padding: 7px 9px;
+  }
+
+  .notif-dropdown {
+    top: 122px;
+  }
+}
 </style>
