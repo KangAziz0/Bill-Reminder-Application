@@ -7,6 +7,7 @@ import com.example.billreminder.dto.RegisterRequest;
 import com.example.billreminder.entity.User;
 import com.example.billreminder.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +23,7 @@ public class AuthService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+    @Lazy
     private final AuthenticationManager authenticationManager;
 
     public AuthResponse register(RegisterRequest request) {
