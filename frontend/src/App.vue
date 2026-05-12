@@ -1,23 +1,26 @@
 <template>
   <div id="app">
     <Navbar v-if="authStore.isAuthenticated" />
-    <main class="main-content" :class="{ 'with-nav': authStore.isAuthenticated }">
+    <main
+      class="main-content"
+      :class="{ 'with-nav': authStore.isAuthenticated }"
+    >
       <RouterView />
     </main>
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
-import { RouterView } from 'vue-router'
-import Navbar from '@/components/Navbar.vue'
-import { useAuthStore } from '@/stores/authStore.js'
+import { onMounted } from "vue";
+import { RouterView } from "vue-router";
+import Navbar from "@/components/Navbar.vue";
+import { useAuthStore } from "@/stores/authStore.js";
 
-const authStore = useAuthStore()
+const authStore = useAuthStore();
 
 onMounted(() => {
-  authStore.initAuth()
-})
+  authStore.initAuth();
+});
 </script>
 
 <style>
@@ -29,12 +32,9 @@ onMounted(() => {
 #app {
   min-height: 100vh;
   background-color: #f0f2f5;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-.main-content {
-  padding: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 .main-content.with-nav {
-  padding-top: 80px;
+  padding: 80px 30px 10px 30px;
 }
 </style>
