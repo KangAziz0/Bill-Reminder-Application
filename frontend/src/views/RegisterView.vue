@@ -20,6 +20,11 @@
           <label class="form-label">{{ $t('auth.password') }}</label>
           <input v-model="form.password" type="password" class="form-control" :placeholder="$t('auth.passwordPlaceholder')" required minlength="6" />
         </div>
+        <div class="form-group">
+          <label class="form-label">{{ $t('auth.phoneNumber') || 'Nomor WhatsApp' }}</label>
+          <input v-model="form.phoneNumber" type="tel" class="form-control" :placeholder="$t('auth.phonePlaceholder') || 'Contoh: 08123456789'" />
+          <small class="form-hint">{{ $t('auth.phoneHint') || 'Opsional, untuk menerima notifikasi via WhatsApp' }}</small>
+        </div>
         <button type="submit" class="btn btn-primary w-full" :disabled="authStore.loading">
           <span v-if="authStore.loading">⏳ {{ $t('auth.registering') }}</span>
           <span v-else>{{ $t('auth.register') }}</span>
@@ -42,7 +47,7 @@ import { useAuthStore } from '@/stores/authStore.js'
 const { t } = useI18n()
 const authStore = useAuthStore()
 const error = ref('')
-const form = ref({ name: '', email: '', password: '' })
+const form = ref({ name: '', email: '', password: '', phoneNumber: '' })
 
 async function handleRegister() {
   error.value = ''
@@ -78,4 +83,5 @@ async function handleRegister() {
 .w-full { width: 100%; justify-content: center; }
 .auth-footer { text-align: center; margin-top: 20px; font-size: 14px; color: var(--text-secondary); }
 .auth-footer a { color: var(--primary); text-decoration: none; font-weight: 500; }
+.form-hint { display: block; margin-top: 4px; font-size: 12px; color: var(--text-secondary); }
 </style>

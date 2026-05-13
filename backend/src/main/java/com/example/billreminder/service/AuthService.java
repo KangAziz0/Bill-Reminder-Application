@@ -30,6 +30,7 @@ public class AuthService implements UserDetailsService {
                 .name(request.getName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .phoneNumber(request.getPhoneNumber())
                 .build();
 
         userRepository.save(user);
@@ -41,6 +42,7 @@ public class AuthService implements UserDetailsService {
                 .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
+                .phoneNumber(user.getPhoneNumber())
                 .build();
     }
 
@@ -60,6 +62,7 @@ public class AuthService implements UserDetailsService {
                 .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
+                .phoneNumber(user.getPhoneNumber())
                 .build();
     }
 

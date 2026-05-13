@@ -45,7 +45,10 @@ export default {
     registerNow: 'Register now',
     loginNow: 'Login',
     loginFailed: 'Login failed. Please check your email and password.',
-    registerFailed: 'Registration failed. Please try again.'
+    registerFailed: 'Registration failed. Please try again.',
+    phoneNumber: 'WhatsApp Number',
+    phonePlaceholder: 'Example: 08123456789',
+    phoneHint: 'Optional, to receive notifications via WhatsApp'
   },
 
   // Dashboard

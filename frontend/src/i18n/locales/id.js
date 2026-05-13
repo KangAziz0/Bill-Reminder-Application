@@ -45,7 +45,10 @@ export default {
     registerNow: 'Daftar sekarang',
     loginNow: 'Login',
     loginFailed: 'Login gagal. Periksa email dan password Anda.',
-    registerFailed: 'Pendaftaran gagal. Coba lagi.'
+    registerFailed: 'Pendaftaran gagal. Coba lagi.',
+    phoneNumber: 'Nomor WhatsApp',
+    phonePlaceholder: 'Contoh: 08123456789',
+    phoneHint: 'Opsional, untuk menerima notifikasi via WhatsApp'
   },
 
   // Dashboard

@@ -24,7 +24,7 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       const response = await authService.login(credentials)
       token.value = response.token
-      user.value = { id: response.id, name: response.name, email: response.email }
+      user.value = { id: response.id, name: response.name, email: response.email, phoneNumber: response.phoneNumber }
       localStorage.setItem('token', response.token)
       localStorage.setItem('user', JSON.stringify(user.value))
       router.push('/dashboard')
@@ -38,7 +38,7 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       const response = await authService.register(data)
       token.value = response.token
-      user.value = { id: response.id, name: response.name, email: response.email }
+      user.value = { id: response.id, name: response.name, email: response.email, phoneNumber: response.phoneNumber }
       localStorage.setItem('token', response.token)
       localStorage.setItem('user', JSON.stringify(user.value))
       router.push('/dashboard')
