@@ -24,6 +24,7 @@ public class ReminderSchedulerService {
     private final BillRepository billRepository;
     private final NotificationRepository notificationRepository;
     private final JavaMailSender mailSender;
+    private final WhatsAppService whatsAppService;
 
     /**
      * Runs every day at 08:00 AM
@@ -60,6 +61,7 @@ public class ReminderSchedulerService {
                 if (daysUntilDue >= 0) {
                     createReminderNotification(bill, daysUntilDue);
                     sendReminderEmail(bill, daysUntilDue);
+                    sendReminderWhatsApp(bill, daysUntilDue);
 
                     // Update to DUE_SOON if within 7 days
                     if (daysUntilDue <= 7 && bill.getStatus() != BillStatus.DUE_SOON) {
@@ -113,5 +115,49 @@ public class ReminderSchedulerService {
         } catch (Exception e) {
             log.warn("Failed to send reminder email for bill [{}]: {}", bill.getTitle(), e.getMessage());
         }
+    }
+
+    private void sendReminderWhatsApp(Bill bill, long daysUntilDue) {
+        String phoneNumber = bill.getUser().getPhoneNumber();
+        if (phoneNumber == null || phoneNumber.isBlank()) {
+            log.debug("User [{}] tidak memiliki nomor WhatsApp, lewati notifikasi WA.", bill.getUser().getName());
+            return;
+        }
+
+        String message;
+        if (daysUntilDue == 0) {
+            message = String.format(
+                    "*[Pengingat Tagihan]*\n\n" +
+                    "Halo %s,\n\n" +
+                    "Tagihan *%s* jatuh tempo *HARI INI*!\n\n" +
+                    "Nominal: *Rp %s*\n" +
+                    "Jatuh Tempo: %s\n\n" +
+                    "Segera lakukan pembayaran untuk menghindari denda keterlambatan.\n\n" +
+                    "Terima kasih,\n_Bill Reminder App_",
+                    bill.getUser().getName(),
+                    bill.getTitle(),
+                    bill.getAmount().toPlainString(),
+                    bill.getDueDate()
+            );
+        } else {
+            message = String.format(
+                    "*[Pengingat Tagihan]*\n\n" +
+                    "Halo %s,\n\n" +
+                    "Ini adalah pengingat bahwa tagihan Anda akan segera jatuh tempo:\n\n" +
+                    "Tagihan: *%s*\n" +
+                    "Nominal: *Rp %s*\n" +
+                    "Jatuh Tempo: %s\n" +
+                    "Sisa Waktu: *%d hari lagi*\n\n" +
+                    "Mohon segera lakukan pembayaran sebelum tanggal jatuh tempo.\n\n" +
+                    "Terima kasih,\n_Bill Reminder App_",
+                    bill.getUser().getName(),
+                    bill.getTitle(),
+                    bill.getAmount().toPlainString(),
+                    bill.getDueDate(),
+                    daysUntilDue
+            );
+        }
+
+        whatsAppService.sendMessage(phoneNumber, message);
     }
 }
