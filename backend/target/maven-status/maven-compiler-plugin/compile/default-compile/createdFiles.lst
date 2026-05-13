@@ -8,7 +8,6 @@ com\example\billreminder\dto\BillResponse$BillResponseBuilder.class
 com\example\billreminder\dto\DashboardSummaryResponse$DashboardSummaryResponseBuilder.class
 com\example\billreminder\dto\LoginRequest.class
 com\example\billreminder\dto\DashboardChartResponse$CategoryBreakdown$CategoryBreakdownBuilder.class
-com\example\billreminder\controller\DashboardController.class
 com\example\billreminder\repository\NotificationRepository.class
 com\example\billreminder\repository\BillRepository.class
 com\example\billreminder\BillReminderApplication.class

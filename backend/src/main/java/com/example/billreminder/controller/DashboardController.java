@@ -44,8 +44,5 @@ public class DashboardController {
         return user;
     }
 
-    @GetMapping("/charts")
-    public ResponseEntity<DashboardChartResponse> getChartData(@AuthenticationPrincipal User user) {
-        return ResponseEntity.ok(dashboardService.getChartData(user));
-    }
+   
 }
