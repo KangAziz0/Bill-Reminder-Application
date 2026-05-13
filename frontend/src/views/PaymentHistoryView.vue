@@ -1,7 +1,7 @@
 <template>
   <div class="page-container">
     <div class="page-header">
-      <h1 class="page-title">💳 Riwayat Pembayaran</h1>
+      <h1 class="page-title">💳 {{ $t('payment.title') }}</h1>
     </div>
 
     <div v-if="loading" class="loading-spinner"><div class="spinner"></div></div>
@@ -9,20 +9,20 @@
     <template v-else>
       <div v-if="payments.length === 0" class="empty-state card">
         <div class="icon">💸</div>
-        <h3>Belum ada riwayat pembayaran</h3>
-        <p>Tandai tagihan sebagai lunas untuk memulai!</p>
-        <RouterLink to="/bills" class="btn btn-primary" style="margin-top: 16px;">Lihat Tagihan</RouterLink>
+        <h3>{{ $t('payment.noPayments') }}</h3>
+        <p>{{ $t('payment.noPaymentsDesc') }}</p>
+        <RouterLink to="/bills" class="btn btn-primary" style="margin-top: 16px;">{{ $t('payment.viewBills') }}</RouterLink>
       </div>
 
       <div v-else class="card">
         <!-- Summary -->
         <div class="payment-summary">
           <div class="summary-item">
-            <span class="summary-label">Total Pembayaran Bulan Ini</span>
+            <span class="summary-label">{{ $t('payment.totalThisMonth') }}</span>
             <span class="summary-value">Rp {{ formatAmount(currentMonthTotal) }}</span>
           </div>
           <div class="summary-item">
-            <span class="summary-label">Total Transaksi</span>
+            <span class="summary-label">{{ $t('payment.totalTransactions') }}</span>
             <span class="summary-value">{{ payments.length }}</span>
           </div>
         </div>
@@ -31,11 +31,11 @@
           <table>
             <thead>
               <tr>
-                <th>Tagihan</th>
-                <th>Nominal</th>
-                <th>Tanggal Bayar</th>
-                <th>Metode</th>
-                <th>Catatan</th>
+                <th>{{ $t('payment.thBill') }}</th>
+                <th>{{ $t('payment.thAmount') }}</th>
+                <th>{{ $t('payment.thDate') }}</th>
+                <th>{{ $t('payment.thMethod') }}</th>
+                <th>{{ $t('payment.thNotes') }}</th>
               </tr>
             </thead>
             <tbody>
@@ -47,7 +47,7 @@
                 <td>{{ formatDate(payment.paidDate) }}</td>
                 <td>
                   <span v-if="payment.paymentMethod" class="method-badge">{{ payment.paymentMethod }}</span>
-                  <span v-else class="text-gray">-</span>
+                  <span v-else class="text-muted">-</span>
                 </td>
                 <td class="notes-cell">{{ payment.notes || '-' }}</td>
               </tr>
@@ -62,8 +62,10 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import paymentService from '@/services/paymentService.js'
 
+const { locale } = useI18n()
 const payments = ref([])
 const loading = ref(true)
 
@@ -91,7 +93,8 @@ function formatAmount(val) {
 
 function formatDate(date) {
   if (!date) return '-'
-  return new Date(date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
+  const lang = locale.value === 'en' ? 'en-US' : 'id-ID'
+  return new Date(date).toLocaleDateString(lang, { day: 'numeric', month: 'long', year: 'numeric' })
 }
 </script>
 
@@ -101,22 +104,21 @@ function formatDate(date) {
   gap: 32px;
   padding: 16px 0;
   margin-bottom: 20px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border);
   flex-wrap: wrap;
 }
 .summary-item { display: flex; flex-direction: column; gap: 4px; }
-.summary-label { font-size: 13px; color: #6b7280; }
-.summary-value { font-size: 22px; font-weight: 700; color: #4f46e5; }
-.bill-name { font-weight: 500; }
-.amount-cell { font-weight: 600; color: #10b981; }
+.summary-label { font-size: 13px; color: var(--text-secondary); }
+.summary-value { font-size: 22px; font-weight: 700; color: var(--primary); }
+.bill-name { font-weight: 500; color: var(--text-primary); }
+.amount-cell { font-weight: 600; color: var(--success); }
 .method-badge {
-  background: #e0e7ff;
-  color: #4f46e5;
+  background: var(--primary-light);
+  color: var(--primary);
   padding: 3px 10px;
   border-radius: 999px;
   font-size: 12px;
   font-weight: 500;
 }
-.notes-cell { max-width: 200px; color: #6b7280; font-size: 13px; }
-.text-gray { color: #9ca3af; }
+.notes-cell { max-width: 200px; color: var(--text-secondary); font-size: 13px; }
 </style>

@@ -1,8 +1,8 @@
 <template>
   <div class="page-container">
     <div class="page-header">
-      <h1 class="page-title">{{ isEdit ? '✏️ Edit Tagihan' : '➕ Tambah Tagihan' }}</h1>
-      <RouterLink to="/bills" class="btn btn-outline">← Kembali</RouterLink>
+      <h1 class="page-title">{{ isEdit ? `✏️ ${$t('bill.editBill')}` : `➕ ${$t('bill.addBill')}` }}</h1>
+      <RouterLink to="/bills" class="btn btn-outline">← {{ $t('back') }}</RouterLink>
     </div>
 
     <div class="card form-card">
@@ -12,62 +12,62 @@
       <form @submit.prevent="handleSubmit">
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Nama Tagihan *</label>
-            <input v-model="form.title" type="text" class="form-control" placeholder="Internet, Listrik, Sewa..." required />
+            <label class="form-label">{{ $t('bill.billName') }} *</label>
+            <input v-model="form.title" type="text" class="form-control" :placeholder="$t('bill.billNamePlaceholder')" required />
           </div>
           <div class="form-group">
-            <label class="form-label">Kategori</label>
+            <label class="form-label">{{ $t('bill.category') }}</label>
             <select v-model="form.category" class="form-control">
-              <option value="">Pilih kategori</option>
-              <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
+              <option value="">{{ $t('bill.selectCategory') }}</option>
+              <option v-for="cat in categories" :key="cat.value" :value="cat.value">{{ cat.label }}</option>
             </select>
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Nominal (Rp) *</label>
-            <input v-model="form.amount" type="number" class="form-control" placeholder="150000" min="1" required />
+            <label class="form-label">{{ $t('bill.amount') }} *</label>
+            <input v-model="form.amount" type="number" class="form-control" :placeholder="$t('bill.amountPlaceholder')" min="1" required />
           </div>
           <div class="form-group">
-            <label class="form-label">Tanggal Jatuh Tempo *</label>
+            <label class="form-label">{{ $t('bill.dueDate') }} *</label>
             <input v-model="form.dueDate" type="date" class="form-control" required />
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Reminder (hari sebelum jatuh tempo)</label>
+            <label class="form-label">{{ $t('bill.reminder') }}</label>
             <select v-model="form.reminderDaysBefore" class="form-control">
-              <option :value="1">H-1 (1 hari sebelum)</option>
-              <option :value="3">H-3 (3 hari sebelum)</option>
-              <option :value="7">H-7 (7 hari sebelum)</option>
-              <option :value="14">H-14 (2 minggu sebelum)</option>
+              <option :value="1">{{ $t('bill.reminderH1') }}</option>
+              <option :value="3">{{ $t('bill.reminderH3') }}</option>
+              <option :value="7">{{ $t('bill.reminderH7') }}</option>
+              <option :value="14">{{ $t('bill.reminderH14') }}</option>
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">Tagihan Berulang?</label>
+            <label class="form-label">{{ $t('bill.recurring') }}</label>
             <select v-model="form.isRecurring" class="form-control">
-              <option :value="false">Tidak</option>
-              <option :value="true">Ya</option>
+              <option :value="false">{{ $t('bill.recurringNo') }}</option>
+              <option :value="true">{{ $t('bill.recurringYes') }}</option>
             </select>
           </div>
         </div>
 
         <div v-if="form.isRecurring" class="form-group">
-          <label class="form-label">Tipe Pengulangan</label>
+          <label class="form-label">{{ $t('bill.recurringType') }}</label>
           <select v-model="form.recurringType" class="form-control">
-            <option value="WEEKLY">Mingguan</option>
-            <option value="MONTHLY">Bulanan</option>
-            <option value="YEARLY">Tahunan</option>
+            <option value="WEEKLY">{{ $t('bill.weekly') }}</option>
+            <option value="MONTHLY">{{ $t('bill.monthly') }}</option>
+            <option value="YEARLY">{{ $t('bill.yearly') }}</option>
           </select>
         </div>
 
         <div class="form-actions">
-          <RouterLink to="/bills" class="btn btn-outline">Batal</RouterLink>
+          <RouterLink to="/bills" class="btn btn-outline">{{ $t('cancel') }}</RouterLink>
           <button type="submit" class="btn btn-primary" :disabled="saving">
-            <span v-if="saving">⏳ Menyimpan...</span>
-            <span v-else>{{ isEdit ? '💾 Update Tagihan' : '➕ Simpan Tagihan' }}</span>
+            <span v-if="saving">⏳ {{ $t('bill.saving') }}</span>
+            <span v-else>{{ isEdit ? `💾 ${$t('bill.updateBill')}` : `➕ ${$t('bill.saveBill')}` }}</span>
           </button>
         </div>
       </form>
@@ -78,8 +78,10 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import billService from '@/services/billService.js'
 
+const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const saving = ref(false)
@@ -88,7 +90,18 @@ const success = ref('')
 
 const isEdit = computed(() => !!route.params.id)
 
-const categories = ['Internet', 'Listrik', 'Air', 'Gas', 'Telepon', 'Sewa', 'Cicilan', 'Asuransi', 'Subscription', 'Lainnya']
+const categories = computed(() => [
+  { value: 'Internet', label: t('bill.catInternet') },
+  { value: 'Listrik', label: t('bill.catElectricity') },
+  { value: 'Air', label: t('bill.catWater') },
+  { value: 'Gas', label: t('bill.catGas') },
+  { value: 'Telepon', label: t('bill.catPhone') },
+  { value: 'Sewa', label: t('bill.catRent') },
+  { value: 'Cicilan', label: t('bill.catInstallment') },
+  { value: 'Asuransi', label: t('bill.catInsurance') },
+  { value: 'Subscription', label: t('bill.catSubscription') },
+  { value: 'Lainnya', label: t('bill.catOther') }
+])
 
 const form = ref({
   title: '',
@@ -114,7 +127,7 @@ onMounted(async () => {
         recurringType: bill.recurringType || 'MONTHLY'
       }
     } catch (e) {
-      error.value = 'Gagal memuat data tagihan.'
+      error.value = t('bill.loadFailed')
     }
   }
 })
@@ -136,10 +149,10 @@ async function handleSubmit() {
 
     if (isEdit.value) {
       await billService.update(route.params.id, payload)
-      success.value = 'Tagihan berhasil diperbarui!'
+      success.value = t('bill.billUpdated')
     } else {
       await billService.create(payload)
-      success.value = 'Tagihan berhasil disimpan!'
+      success.value = t('bill.billSaved')
     }
 
     setTimeout(() => router.push('/bills'), 1000)
@@ -148,7 +161,7 @@ async function handleSubmit() {
     if (typeof errors === 'object') {
       error.value = Object.values(errors).join(', ')
     } else {
-      error.value = errors?.error || 'Gagal menyimpan tagihan.'
+      error.value = errors?.error || t('bill.saveFailed')
     }
   } finally {
     saving.value = false
