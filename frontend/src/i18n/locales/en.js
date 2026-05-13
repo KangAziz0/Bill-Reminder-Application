@@ -1,0 +1,182 @@
+export default {
+  // General
+  appName: 'Bill Reminder',
+  loading: 'Loading data...',
+  save: 'Save',
+  cancel: 'Cancel',
+  delete: 'Delete',
+  edit: 'Edit',
+  back: 'Back',
+  viewAll: 'View All',
+  logout: 'Logout',
+  close: 'Close',
+
+  // Theme
+  darkMode: 'Dark Mode',
+  lightMode: 'Light Mode',
+
+  // Navbar
+  nav: {
+    dashboard: 'Dashboard',
+    bills: 'Bills',
+    payments: 'Payments',
+    notifications: 'Notifications',
+    markAllRead: 'Mark all as read',
+    noNotifications: 'No notifications'
+  },
+
+  // Auth
+  auth: {
+    login: 'Login',
+    register: 'Register',
+    loginTitle: 'Login to your account',
+    registerTitle: 'Create Account',
+    registerSubtitle: 'Create your Bill Reminder account',
+    email: 'Email',
+    password: 'Password',
+    fullName: 'Full Name',
+    emailPlaceholder: 'email@example.com',
+    passwordPlaceholder: 'Min. 6 characters',
+    namePlaceholder: 'John Doe',
+    loggingIn: 'Logging in...',
+    registering: 'Registering...',
+    noAccount: "Don't have an account?",
+    hasAccount: 'Already have an account?',
+    registerNow: 'Register now',
+    loginNow: 'Login',
+    loginFailed: 'Login failed. Please check your email and password.',
+    registerFailed: 'Registration failed. Please try again.'
+  },
+
+  // Dashboard
+  dashboard: {
+    title: 'Dashboard',
+    subtitle: 'Your financial & billing summary',
+    addBill: 'Add Bill',
+    totalBillsThisMonth: 'Total Bills This Month',
+    paid: 'Paid',
+    unpaid: 'Unpaid',
+    overdue: 'Overdue',
+    dueSoon: 'Due Soon',
+    upcoming: 'Upcoming',
+    paidBills: 'Paid',
+    bills: 'bills',
+    upcomingBillsTitle: 'Bills Due Soon',
+    noUpcomingBills: 'No bills due soon',
+    allSafe: 'All your bills are safe!',
+    // Charts
+    monthlyTrend: 'Bills & Payment Trends (6 Months)',
+    categoryDistribution: 'Category Distribution',
+    statusDistribution: 'Bill Status',
+    billVsPayment: 'Bills vs Payments Comparison',
+    lineChart: 'Line Chart',
+    pieChart: 'Pie Chart',
+    doughnut: 'Doughnut',
+    stackedBar: 'Stacked Bar',
+    noTrendData: 'No trend data available',
+    noCategoryData: 'No category data available',
+    noStatusData: 'No status data available',
+    noComparisonData: 'No comparison data available',
+    totalBills: 'Total Bills',
+    totalPaid: 'Total Paid',
+    billsLabel: 'Bills',
+    paidLabel: 'Paid'
+  },
+
+  // Bills
+  bill: {
+    title: 'Bill List',
+    addBill: 'Add Bill',
+    editBill: 'Edit Bill',
+    noBills: 'No bills found',
+    addFirstBill: 'Add your first bill!',
+    billName: 'Bill Name',
+    billNamePlaceholder: 'Internet, Electricity, Rent...',
+    category: 'Category',
+    selectCategory: 'Select category',
+    amount: 'Amount (Rp)',
+    amountPlaceholder: '150000',
+    dueDate: 'Due Date',
+    dueDateLabel: 'Due date',
+    reminder: 'Reminder (days before due date)',
+    reminderH1: 'D-1 (1 day before)',
+    reminderH3: 'D-3 (3 days before)',
+    reminderH7: 'D-7 (7 days before)',
+    reminderH14: 'D-14 (2 weeks before)',
+    recurring: 'Recurring Bill?',
+    recurringNo: 'No',
+    recurringYes: 'Yes',
+    recurringType: 'Recurrence Type',
+    weekly: 'Weekly',
+    monthly: 'Monthly',
+    yearly: 'Yearly',
+    saving: 'Saving...',
+    updateBill: 'Update Bill',
+    saveBill: 'Save Bill',
+    billSaved: 'Bill saved successfully!',
+    billUpdated: 'Bill updated successfully!',
+    saveFailed: 'Failed to save bill.',
+    loadFailed: 'Failed to load bill data.',
+    markPaid: 'Mark as Paid',
+    deleteBill: 'Delete Bill',
+    deleteConfirm: 'Are you sure you want to delete bill',
+    deleteWarning: 'This action cannot be undone.',
+    // Filters
+    filterAll: 'All',
+    filterUpcoming: 'Upcoming',
+    filterDueSoon: 'Due Soon',
+    filterOverdue: 'Overdue',
+    filterPaid: 'Paid',
+    // Categories
+    catInternet: 'Internet',
+    catElectricity: 'Electricity',
+    catWater: 'Water',
+    catGas: 'Gas',
+    catPhone: 'Phone',
+    catRent: 'Rent',
+    catInstallment: 'Installment',
+    catInsurance: 'Insurance',
+    catSubscription: 'Subscription',
+    catOther: 'Other'
+  },
+
+  // Payments
+  payment: {
+    title: 'Payment History',
+    noPayments: 'No payment history yet',
+    noPaymentsDesc: 'Mark bills as paid to get started!',
+    viewBills: 'View Bills',
+    totalThisMonth: 'Total Payments This Month',
+    totalTransactions: 'Total Transactions',
+    recordPayment: 'Record Payment',
+    paidAmount: 'Paid Amount',
+    paidDate: 'Payment Date',
+    paymentMethod: 'Payment Method',
+    selectMethod: 'Select method',
+    notes: 'Notes (optional)',
+    notesPlaceholder: 'Payment notes...',
+    confirmPay: 'Confirm Payment',
+    // Table headers
+    thBill: 'Bill',
+    thAmount: 'Amount',
+    thDate: 'Payment Date',
+    thMethod: 'Method',
+    thNotes: 'Notes',
+    // Methods
+    methodTransfer: 'Bank Transfer',
+    methodVA: 'Virtual Account',
+    methodQRIS: 'QRIS',
+    methodCash: 'Cash',
+    methodCC: 'Credit Card',
+    methodDebit: 'Debit Card',
+    methodEwallet: 'E-Wallet'
+  },
+
+  // Status labels
+  status: {
+    upcoming: 'Upcoming',
+    dueSoon: 'Due Soon',
+    overdue: 'Overdue',
+    paid: 'Paid'
+  }
+}

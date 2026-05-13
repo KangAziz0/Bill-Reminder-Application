@@ -1,0 +1,182 @@
+export default {
+  // General
+  appName: 'Bill Reminder',
+  loading: 'Memuat data...',
+  save: 'Simpan',
+  cancel: 'Batal',
+  delete: 'Hapus',
+  edit: 'Edit',
+  back: 'Kembali',
+  viewAll: 'Lihat Semua',
+  logout: 'Logout',
+  close: 'Tutup',
+
+  // Theme
+  darkMode: 'Mode Gelap',
+  lightMode: 'Mode Terang',
+
+  // Navbar
+  nav: {
+    dashboard: 'Dashboard',
+    bills: 'Tagihan',
+    payments: 'Riwayat Bayar',
+    notifications: 'Notifikasi',
+    markAllRead: 'Tandai semua dibaca',
+    noNotifications: 'Tidak ada notifikasi'
+  },
+
+  // Auth
+  auth: {
+    login: 'Login',
+    register: 'Daftar',
+    loginTitle: 'Login ke akun Anda',
+    registerTitle: 'Daftar Akun',
+    registerSubtitle: 'Buat akun Bill Reminder Anda',
+    email: 'Email',
+    password: 'Password',
+    fullName: 'Nama Lengkap',
+    emailPlaceholder: 'email@contoh.com',
+    passwordPlaceholder: 'Min. 6 karakter',
+    namePlaceholder: 'John Doe',
+    loggingIn: 'Logging in...',
+    registering: 'Mendaftar...',
+    noAccount: 'Belum punya akun?',
+    hasAccount: 'Sudah punya akun?',
+    registerNow: 'Daftar sekarang',
+    loginNow: 'Login',
+    loginFailed: 'Login gagal. Periksa email dan password Anda.',
+    registerFailed: 'Pendaftaran gagal. Coba lagi.'
+  },
+
+  // Dashboard
+  dashboard: {
+    title: 'Dashboard',
+    subtitle: 'Ringkasan keuangan & tagihan Anda',
+    addBill: 'Tambah Tagihan',
+    totalBillsThisMonth: 'Total Tagihan Bulan Ini',
+    paid: 'Sudah Dibayar',
+    unpaid: 'Belum Dibayar',
+    overdue: 'Terlambat',
+    dueSoon: 'Mendekati Jatuh Tempo',
+    upcoming: 'Akan Datang',
+    paidBills: 'Lunas',
+    bills: 'tagihan',
+    upcomingBillsTitle: 'Tagihan Mendekati Jatuh Tempo',
+    noUpcomingBills: 'Tidak ada tagihan mendekati jatuh tempo',
+    allSafe: 'Semua tagihan Anda aman!',
+    // Charts
+    monthlyTrend: 'Tren Tagihan & Pembayaran (6 Bulan)',
+    categoryDistribution: 'Distribusi Kategori',
+    statusDistribution: 'Status Tagihan',
+    billVsPayment: 'Perbandingan Tagihan vs Pembayaran',
+    lineChart: 'Line Chart',
+    pieChart: 'Pie Chart',
+    doughnut: 'Doughnut',
+    stackedBar: 'Stacked Bar',
+    noTrendData: 'Belum ada data tren',
+    noCategoryData: 'Belum ada data kategori',
+    noStatusData: 'Belum ada data status',
+    noComparisonData: 'Belum ada data perbandingan',
+    totalBills: 'Total Tagihan',
+    totalPaid: 'Total Dibayar',
+    billsLabel: 'Tagihan',
+    paidLabel: 'Dibayar'
+  },
+
+  // Bills
+  bill: {
+    title: 'Daftar Tagihan',
+    addBill: 'Tambah Tagihan',
+    editBill: 'Edit Tagihan',
+    noBills: 'Tidak ada tagihan',
+    addFirstBill: 'Tambahkan tagihan pertama Anda!',
+    billName: 'Nama Tagihan',
+    billNamePlaceholder: 'Internet, Listrik, Sewa...',
+    category: 'Kategori',
+    selectCategory: 'Pilih kategori',
+    amount: 'Nominal (Rp)',
+    amountPlaceholder: '150000',
+    dueDate: 'Tanggal Jatuh Tempo',
+    dueDateLabel: 'Jatuh tempo',
+    reminder: 'Reminder (hari sebelum jatuh tempo)',
+    reminderH1: 'H-1 (1 hari sebelum)',
+    reminderH3: 'H-3 (3 hari sebelum)',
+    reminderH7: 'H-7 (7 hari sebelum)',
+    reminderH14: 'H-14 (2 minggu sebelum)',
+    recurring: 'Tagihan Berulang?',
+    recurringNo: 'Tidak',
+    recurringYes: 'Ya',
+    recurringType: 'Tipe Pengulangan',
+    weekly: 'Mingguan',
+    monthly: 'Bulanan',
+    yearly: 'Tahunan',
+    saving: 'Menyimpan...',
+    updateBill: 'Update Tagihan',
+    saveBill: 'Simpan Tagihan',
+    billSaved: 'Tagihan berhasil disimpan!',
+    billUpdated: 'Tagihan berhasil diperbarui!',
+    saveFailed: 'Gagal menyimpan tagihan.',
+    loadFailed: 'Gagal memuat data tagihan.',
+    markPaid: 'Tandai Lunas',
+    deleteBill: 'Hapus Tagihan',
+    deleteConfirm: 'Apakah Anda yakin ingin menghapus tagihan',
+    deleteWarning: 'Tindakan ini tidak dapat dibatalkan.',
+    // Filters
+    filterAll: 'Semua',
+    filterUpcoming: 'Upcoming',
+    filterDueSoon: 'Mendekati',
+    filterOverdue: 'Terlambat',
+    filterPaid: 'Lunas',
+    // Categories
+    catInternet: 'Internet',
+    catElectricity: 'Listrik',
+    catWater: 'Air',
+    catGas: 'Gas',
+    catPhone: 'Telepon',
+    catRent: 'Sewa',
+    catInstallment: 'Cicilan',
+    catInsurance: 'Asuransi',
+    catSubscription: 'Subscription',
+    catOther: 'Lainnya'
+  },
+
+  // Payments
+  payment: {
+    title: 'Riwayat Pembayaran',
+    noPayments: 'Belum ada riwayat pembayaran',
+    noPaymentsDesc: 'Tandai tagihan sebagai lunas untuk memulai!',
+    viewBills: 'Lihat Tagihan',
+    totalThisMonth: 'Total Pembayaran Bulan Ini',
+    totalTransactions: 'Total Transaksi',
+    recordPayment: 'Catat Pembayaran',
+    paidAmount: 'Nominal Bayar',
+    paidDate: 'Tanggal Bayar',
+    paymentMethod: 'Metode Pembayaran',
+    selectMethod: 'Pilih metode',
+    notes: 'Catatan (opsional)',
+    notesPlaceholder: 'Catatan pembayaran...',
+    confirmPay: 'Konfirmasi Bayar',
+    // Table headers
+    thBill: 'Tagihan',
+    thAmount: 'Nominal',
+    thDate: 'Tanggal Bayar',
+    thMethod: 'Metode',
+    thNotes: 'Catatan',
+    // Methods
+    methodTransfer: 'Transfer Bank',
+    methodVA: 'Virtual Account',
+    methodQRIS: 'QRIS',
+    methodCash: 'Tunai',
+    methodCC: 'Kartu Kredit',
+    methodDebit: 'Kartu Debit',
+    methodEwallet: 'E-Wallet'
+  },
+
+  // Status labels
+  status: {
+    upcoming: 'Upcoming',
+    dueSoon: 'Mendekati',
+    overdue: 'Terlambat',
+    paid: 'Lunas'
+  }
+}

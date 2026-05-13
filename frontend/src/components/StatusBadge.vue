@@ -4,6 +4,9 @@
 
 <script setup>
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const props = defineProps({
   status: { type: String, required: true }
@@ -17,12 +20,12 @@ const badgeClass = computed(() => ({
 }))
 
 const label = computed(() => {
-  const labels = {
-    UPCOMING: 'Upcoming',
-    DUE_SOON: 'Mendekati',
-    OVERDUE: 'Terlambat',
-    PAID: 'Lunas'
+  const map = {
+    UPCOMING: 'status.upcoming',
+    DUE_SOON: 'status.dueSoon',
+    OVERDUE: 'status.overdue',
+    PAID: 'status.paid'
   }
-  return labels[props.status] || props.status
+  return t(map[props.status] || props.status)
 })
 </script>

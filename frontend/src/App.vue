@@ -15,8 +15,11 @@ import { onMounted } from "vue";
 import { RouterView } from "vue-router";
 import Navbar from "@/components/Navbar.vue";
 import { useAuthStore } from "@/stores/authStore.js";
+import { useTheme } from "@/composables/useTheme.js";
 
 const authStore = useAuthStore();
+// Initialize theme on app load
+useTheme();
 
 onMounted(() => {
   authStore.initAuth();
@@ -31,8 +34,10 @@ onMounted(() => {
 }
 #app {
   min-height: 100vh;
-  background-color: #f0f2f5;
+  background-color: var(--bg-body);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 .main-content.with-nav {
   padding: 80px 30px 10px 30px;
