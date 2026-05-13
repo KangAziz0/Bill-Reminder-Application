@@ -23,21 +23,27 @@
           <div class="card-icon">💰</div>
           <div class="card-content">
             <span class="card-label">Total Tagihan Bulan Ini</span>
-            <span class="card-value">Rp {{ formatAmount(summary.totalBillsThisMonth) }}</span>
+            <span class="card-value"
+              >Rp {{ formatAmount(summary.totalBillsThisMonth) }}</span
+            >
           </div>
         </div>
         <div class="summary-card card-paid">
           <div class="card-icon">✅</div>
           <div class="card-content">
             <span class="card-label">Sudah Dibayar</span>
-            <span class="card-value">Rp {{ formatAmount(summary.totalPaid) }}</span>
+            <span class="card-value"
+              >Rp {{ formatAmount(summary.totalPaid) }}</span
+            >
           </div>
         </div>
         <div class="summary-card card-unpaid">
           <div class="card-icon">⏳</div>
           <div class="card-content">
             <span class="card-label">Belum Dibayar</span>
-            <span class="card-value">Rp {{ formatAmount(summary.totalUnpaid) }}</span>
+            <span class="card-value"
+              >Rp {{ formatAmount(summary.totalUnpaid) }}</span
+            >
           </div>
         </div>
         <div class="summary-card card-overdue">
@@ -74,7 +80,11 @@
             <span class="chart-badge">Line Chart</span>
           </div>
           <div class="chart-body">
-            <Line v-if="lineChartData" :data="lineChartData" :options="lineChartOptions" />
+            <Line
+              v-if="lineChartData"
+              :data="lineChartData"
+              :options="lineChartOptions"
+            />
             <div v-else class="chart-empty">Belum ada data tren</div>
           </div>
         </div>
@@ -86,7 +96,11 @@
             <span class="chart-badge">Pie Chart</span>
           </div>
           <div class="chart-body chart-body-pie">
-            <Pie v-if="pieChartData" :data="pieChartData" :options="pieChartOptions" />
+            <Pie
+              v-if="pieChartData"
+              :data="pieChartData"
+              :options="pieChartOptions"
+            />
             <div v-else class="chart-empty">Belum ada data kategori</div>
           </div>
         </div>
@@ -98,7 +112,11 @@
             <span class="chart-badge">Doughnut</span>
           </div>
           <div class="chart-body chart-body-pie">
-            <Doughnut v-if="doughnutChartData" :data="doughnutChartData" :options="doughnutChartOptions" />
+            <Doughnut
+              v-if="doughnutChartData"
+              :data="doughnutChartData"
+              :options="doughnutChartOptions"
+            />
             <div v-else class="chart-empty">Belum ada data status</div>
           </div>
         </div>
@@ -110,7 +128,11 @@
             <span class="chart-badge">Stacked Bar</span>
           </div>
           <div class="chart-body">
-            <Bar v-if="barChartData" :data="barChartData" :options="barChartOptions" />
+            <Bar
+              v-if="barChartData"
+              :data="barChartData"
+              :options="barChartOptions"
+            />
             <div v-else class="chart-empty">Belum ada data perbandingan</div>
           </div>
         </div>
@@ -145,8 +167,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
+import { ref, onMounted, computed } from "vue";
+import { RouterLink, useRouter } from "vue-router";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -158,12 +180,12 @@ import {
   Title,
   Tooltip,
   Legend,
-  Filler
-} from 'chart.js'
-import { Line, Pie, Bar, Doughnut } from 'vue-chartjs'
-import BillCard from '@/components/BillCard.vue'
-import dashboardService from '@/services/dashboardService.js'
-import billService from '@/services/billService.js'
+  Filler,
+} from "chart.js";
+import { Line, Pie, Bar, Doughnut } from "vue-chartjs";
+import BillCard from "@/components/BillCard.vue";
+import dashboardService from "@/services/dashboardService.js";
+import billService from "@/services/billService.js";
 
 // Register Chart.js components
 ChartJS.register(
@@ -176,11 +198,11 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  Filler
-)
+  Filler,
+);
 
-const router = useRouter()
-const loading = ref(true)
+const router = useRouter();
+const loading = ref(true);
 const summary = ref({
   totalBillsThisMonth: 0,
   totalPaid: 0,
@@ -188,274 +210,328 @@ const summary = ref({
   overdueCount: 0,
   dueSoonCount: 0,
   upcomingCount: 0,
-  paidCount: 0
-})
-const upcomingBills = ref([])
-const chartData = ref(null)
+  paidCount: 0,
+});
+
+const upcomingBills = ref([]);
+const chartData = ref(null);
 
 // Color palette
 const colors = {
-  primary: '#6366f1',
-  primaryLight: 'rgba(99, 102, 241, 0.1)',
-  success: '#10b981',
-  successLight: 'rgba(16, 185, 129, 0.1)',
-  warning: '#f59e0b',
-  warningLight: 'rgba(245, 158, 11, 0.1)',
-  danger: '#ef4444',
-  dangerLight: 'rgba(239, 68, 68, 0.1)',
-  info: '#3b82f6',
-  infoLight: 'rgba(59, 130, 246, 0.1)',
-  purple: '#8b5cf6',
-  pink: '#ec4899',
-  teal: '#14b8a6',
-  orange: '#f97316',
-  cyan: '#06b6d4',
-  lime: '#84cc16'
-}
+  primary: "#6366f1",
+  primaryLight: "rgba(99, 102, 241, 0.1)",
+  success: "#10b981",
+  successLight: "rgba(16, 185, 129, 0.1)",
+  warning: "#f59e0b",
+  warningLight: "rgba(245, 158, 11, 0.1)",
+  danger: "#ef4444",
+  dangerLight: "rgba(239, 68, 68, 0.1)",
+  info: "#3b82f6",
+  infoLight: "rgba(59, 130, 246, 0.1)",
+  purple: "#8b5cf6",
+  pink: "#ec4899",
+  teal: "#14b8a6",
+  orange: "#f97316",
+  cyan: "#06b6d4",
+  lime: "#84cc16",
+};
 
 const categoryColors = [
-  '#6366f1', '#10b981', '#f59e0b', '#ef4444',
-  '#8b5cf6', '#ec4899', '#14b8a6', '#f97316',
-  '#06b6d4', '#84cc16', '#3b82f6', '#d946ef'
-]
+  "#6366f1",
+  "#10b981",
+  "#f59e0b",
+  "#ef4444",
+  "#8b5cf6",
+  "#ec4899",
+  "#14b8a6",
+  "#f97316",
+  "#06b6d4",
+  "#84cc16",
+  "#3b82f6",
+  "#d946ef",
+];
 
 const statusColorMap = {
-  'PAID': '#10b981',
-  'UPCOMING': '#3b82f6',
-  'DUE_SOON': '#f59e0b',
-  'OVERDUE': '#ef4444'
-}
+  PAID: "#10b981",
+  UPCOMING: "#3b82f6",
+  DUE_SOON: "#f59e0b",
+  OVERDUE: "#ef4444",
+};
 
 const statusLabelMap = {
-  'PAID': 'Lunas',
-  'UPCOMING': 'Akan Datang',
-  'DUE_SOON': 'Mendekati Jatuh Tempo',
-  'OVERDUE': 'Terlambat'
-}
+  PAID: "Lunas",
+  UPCOMING: "Akan Datang",
+  DUE_SOON: "Mendekati Jatuh Tempo",
+  OVERDUE: "Terlambat",
+};
 
 // Chart data computations
 const lineChartData = computed(() => {
-  if (!chartData.value || !chartData.value.monthlyTrends || chartData.value.monthlyTrends.length === 0) return null
-  const trends = chartData.value.monthlyTrends
+  if (
+    !chartData.value ||
+    !chartData.value.monthlyTrends ||
+    chartData.value.monthlyTrends.length === 0
+  )
+    return null;
+  const trends = chartData.value.monthlyTrends;
   return {
-    labels: trends.map(t => t.month),
+    labels: trends.map((t) => t.month),
     datasets: [
       {
-        label: 'Total Tagihan',
-        data: trends.map(t => Number(t.totalBills)),
+        label: "Total Tagihan",
+        data: trends.map((t) => Number(t.totalBills)),
         borderColor: colors.primary,
         backgroundColor: colors.primaryLight,
         fill: true,
         tension: 0.4,
         pointBackgroundColor: colors.primary,
-        pointBorderColor: '#fff',
+        pointBorderColor: "#fff",
         pointBorderWidth: 2,
         pointRadius: 5,
-        pointHoverRadius: 7
+        pointHoverRadius: 7,
       },
       {
-        label: 'Total Dibayar',
-        data: trends.map(t => Number(t.totalPaid)),
+        label: "Total Dibayar",
+        data: trends.map((t) => Number(t.totalPaid)),
         borderColor: colors.success,
         backgroundColor: colors.successLight,
         fill: true,
         tension: 0.4,
         pointBackgroundColor: colors.success,
-        pointBorderColor: '#fff',
+        pointBorderColor: "#fff",
         pointBorderWidth: 2,
         pointRadius: 5,
-        pointHoverRadius: 7
-      }
-    ]
-  }
-})
+        pointHoverRadius: 7,
+      },
+    ],
+  };
+});
 
 const lineChartOptions = {
   responsive: true,
   maintainAspectRatio: false,
-  interaction: { intersect: false, mode: 'index' },
+  interaction: { intersect: false, mode: "index" },
   plugins: {
     legend: {
-      position: 'top',
-      labels: { usePointStyle: true, padding: 20, font: { size: 12, weight: '500' } }
+      position: "top",
+      labels: {
+        usePointStyle: true,
+        padding: 20,
+        font: { size: 12, weight: "500" },
+      },
     },
     tooltip: {
-      backgroundColor: 'rgba(17, 24, 39, 0.9)',
+      backgroundColor: "rgba(17, 24, 39, 0.9)",
       titleFont: { size: 13 },
       bodyFont: { size: 12 },
       padding: 12,
       cornerRadius: 8,
       callbacks: {
-        label: function(context) {
-          return `${context.dataset.label}: Rp ${Number(context.raw).toLocaleString('id-ID')}`
-        }
-      }
-    }
+        label: function (context) {
+          return `${context.dataset.label}: Rp ${Number(context.raw).toLocaleString("id-ID")}`;
+        },
+      },
+    },
   },
   scales: {
     x: {
       grid: { display: false },
-      ticks: { font: { size: 11 } }
+      ticks: { font: { size: 11 } },
     },
     y: {
-      grid: { color: 'rgba(0,0,0,0.05)' },
+      grid: { color: "rgba(0,0,0,0.05)" },
       ticks: {
         font: { size: 11 },
-        callback: function(value) {
-          if (value >= 1000000) return 'Rp ' + (value / 1000000).toFixed(1) + 'jt'
-          if (value >= 1000) return 'Rp ' + (value / 1000).toFixed(0) + 'rb'
-          return 'Rp ' + value
-        }
-      }
-    }
-  }
-}
+        callback: function (value) {
+          if (value >= 1000000)
+            return "Rp " + (value / 1000000).toFixed(1) + "jt";
+          if (value >= 1000) return "Rp " + (value / 1000).toFixed(0) + "rb";
+          return "Rp " + value;
+        },
+      },
+    },
+  },
+};
 
 const pieChartData = computed(() => {
-  if (!chartData.value || !chartData.value.categoryBreakdown || chartData.value.categoryBreakdown.length === 0) return null
-  const categories = chartData.value.categoryBreakdown
+  if (
+    !chartData.value ||
+    !chartData.value.categoryBreakdown ||
+    chartData.value.categoryBreakdown.length === 0
+  )
+    return null;
+  const categories = chartData.value.categoryBreakdown;
   return {
-    labels: categories.map(c => c.category),
-    datasets: [{
-      data: categories.map(c => Number(c.amount)),
-      backgroundColor: categoryColors.slice(0, categories.length),
-      borderColor: '#fff',
-      borderWidth: 2,
-      hoverOffset: 8
-    }]
-  }
-})
+    labels: categories.map((c) => c.category),
+    datasets: [
+      {
+        data: categories.map((c) => Number(c.amount)),
+        backgroundColor: categoryColors.slice(0, categories.length),
+        borderColor: "#fff",
+        borderWidth: 2,
+        hoverOffset: 8,
+      },
+    ],
+  };
+});
 
 const pieChartOptions = {
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
     legend: {
-      position: 'bottom',
-      labels: { usePointStyle: true, padding: 16, font: { size: 11, weight: '500' } }
+      position: "bottom",
+      labels: {
+        usePointStyle: true,
+        padding: 16,
+        font: { size: 11, weight: "500" },
+      },
     },
     tooltip: {
-      backgroundColor: 'rgba(17, 24, 39, 0.9)',
+      backgroundColor: "rgba(17, 24, 39, 0.9)",
       padding: 12,
       cornerRadius: 8,
       callbacks: {
-        label: function(context) {
-          const total = context.dataset.data.reduce((a, b) => a + b, 0)
-          const percentage = ((context.raw / total) * 100).toFixed(1)
-          return `${context.label}: Rp ${Number(context.raw).toLocaleString('id-ID')} (${percentage}%)`
-        }
-      }
-    }
-  }
-}
+        label: function (context) {
+          const total = context.dataset.data.reduce((a, b) => a + b, 0);
+          const percentage = ((context.raw / total) * 100).toFixed(1);
+          return `${context.label}: Rp ${Number(context.raw).toLocaleString("id-ID")} (${percentage}%)`;
+        },
+      },
+    },
+  },
+};
 
 const doughnutChartData = computed(() => {
-  if (!chartData.value || !chartData.value.statusDistribution || chartData.value.statusDistribution.length === 0) return null
-  const statuses = chartData.value.statusDistribution
+  if (
+    !chartData.value ||
+    !chartData.value.statusDistribution ||
+    chartData.value.statusDistribution.length === 0
+  )
+    return null;
+  const statuses = chartData.value.statusDistribution;
   return {
-    labels: statuses.map(s => statusLabelMap[s.status] || s.status),
-    datasets: [{
-      data: statuses.map(s => s.count),
-      backgroundColor: statuses.map(s => statusColorMap[s.status] || '#9ca3af'),
-      borderColor: '#fff',
-      borderWidth: 3,
-      hoverOffset: 6
-    }]
-  }
-})
+    labels: statuses.map((s) => statusLabelMap[s.status] || s.status),
+    datasets: [
+      {
+        data: statuses.map((s) => s.count),
+        backgroundColor: statuses.map(
+          (s) => statusColorMap[s.status] || "#9ca3af",
+        ),
+        borderColor: "#fff",
+        borderWidth: 3,
+        hoverOffset: 6,
+      },
+    ],
+  };
+});
 
 const doughnutChartOptions = {
   responsive: true,
   maintainAspectRatio: false,
-  cutout: '65%',
+  cutout: "65%",
   plugins: {
     legend: {
-      position: 'bottom',
-      labels: { usePointStyle: true, padding: 16, font: { size: 11, weight: '500' } }
+      position: "bottom",
+      labels: {
+        usePointStyle: true,
+        padding: 16,
+        font: { size: 11, weight: "500" },
+      },
     },
     tooltip: {
-      backgroundColor: 'rgba(17, 24, 39, 0.9)',
+      backgroundColor: "rgba(17, 24, 39, 0.9)",
       padding: 12,
       cornerRadius: 8,
       callbacks: {
-        label: function(context) {
-          const total = context.dataset.data.reduce((a, b) => a + b, 0)
-          const percentage = ((context.raw / total) * 100).toFixed(1)
-          return `${context.label}: ${context.raw} tagihan (${percentage}%)`
-        }
-      }
-    }
-  }
-}
+        label: function (context) {
+          const total = context.dataset.data.reduce((a, b) => a + b, 0);
+          const percentage = ((context.raw / total) * 100).toFixed(1);
+          return `${context.label}: ${context.raw} tagihan (${percentage}%)`;
+        },
+      },
+    },
+  },
+};
 
 const barChartData = computed(() => {
-  if (!chartData.value || !chartData.value.monthlyTrends || chartData.value.monthlyTrends.length === 0) return null
-  const trends = chartData.value.monthlyTrends
+  if (
+    !chartData.value ||
+    !chartData.value.monthlyTrends ||
+    chartData.value.monthlyTrends.length === 0
+  )
+    return null;
+  const trends = chartData.value.monthlyTrends;
   return {
-    labels: trends.map(t => t.month),
+    labels: trends.map((t) => t.month),
     datasets: [
       {
-        label: 'Tagihan',
-        data: trends.map(t => Number(t.totalBills)),
-        backgroundColor: 'rgba(99, 102, 241, 0.8)',
+        label: "Tagihan",
+        data: trends.map((t) => Number(t.totalBills)),
+        backgroundColor: "rgba(99, 102, 241, 0.8)",
         borderColor: colors.primary,
         borderWidth: 1,
         borderRadius: 6,
-        borderSkipped: false
+        borderSkipped: false,
       },
       {
-        label: 'Dibayar',
-        data: trends.map(t => Number(t.totalPaid)),
-        backgroundColor: 'rgba(16, 185, 129, 0.8)',
+        label: "Dibayar",
+        data: trends.map((t) => Number(t.totalPaid)),
+        backgroundColor: "rgba(16, 185, 129, 0.8)",
         borderColor: colors.success,
         borderWidth: 1,
         borderRadius: 6,
-        borderSkipped: false
-      }
-    ]
-  }
-})
+        borderSkipped: false,
+      },
+    ],
+  };
+});
 
 const barChartOptions = {
   responsive: true,
   maintainAspectRatio: false,
-  interaction: { intersect: false, mode: 'index' },
+  interaction: { intersect: false, mode: "index" },
   plugins: {
     legend: {
-      position: 'top',
-      labels: { usePointStyle: true, padding: 20, font: { size: 12, weight: '500' } }
+      position: "top",
+      labels: {
+        usePointStyle: true,
+        padding: 20,
+        font: { size: 12, weight: "500" },
+      },
     },
     tooltip: {
-      backgroundColor: 'rgba(17, 24, 39, 0.9)',
+      backgroundColor: "rgba(17, 24, 39, 0.9)",
       padding: 12,
       cornerRadius: 8,
       callbacks: {
-        label: function(context) {
-          return `${context.dataset.label}: Rp ${Number(context.raw).toLocaleString('id-ID')}`
-        }
-      }
-    }
+        label: function (context) {
+          return `${context.dataset.label}: Rp ${Number(context.raw).toLocaleString("id-ID")}`;
+        },
+      },
+    },
   },
   scales: {
     x: {
       stacked: true,
       grid: { display: false },
-      ticks: { font: { size: 11 } }
+      ticks: { font: { size: 11 } },
     },
     y: {
       stacked: true,
-      grid: { color: 'rgba(0,0,0,0.05)' },
+      grid: { color: "rgba(0,0,0,0.05)" },
       ticks: {
         font: { size: 11 },
-        callback: function(value) {
-          if (value >= 1000000) return 'Rp ' + (value / 1000000).toFixed(1) + 'jt'
-          if (value >= 1000) return 'Rp ' + (value / 1000).toFixed(0) + 'rb'
-          return 'Rp ' + value
-        }
-      }
-    }
-  }
-}
+        callback: function (value) {
+          if (value >= 1000000)
+            return "Rp " + (value / 1000000).toFixed(1) + "jt";
+          if (value >= 1000) return "Rp " + (value / 1000).toFixed(0) + "rb";
+          return "Rp " + value;
+        },
+      },
+    },
+  },
+};
 
 // Lifecycle
 onMounted(async () => {
@@ -463,35 +539,38 @@ onMounted(async () => {
     const [s, ub, cd] = await Promise.all([
       dashboardService.getSummary(),
       dashboardService.getUpcomingBills(),
-      dashboardService.getChartData()
-    ])
-    summary.value = s
-    upcomingBills.value = ub
-    chartData.value = cd
+      dashboardService.getChartData(),
+    ]);
+
+    console.log("summary api:", s);
+
+    summary.value = s;
+    upcomingBills.value = ub;
+    chartData.value = cd;
   } catch (error) {
-    console.error('Failed to load dashboard data:', error)
+    console.error("Failed to load dashboard data:", error);
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-})
+});
 
 async function quickMarkPaid(bill) {
-  await billService.markAsPaid(bill.id)
-  upcomingBills.value = upcomingBills.value.filter(b => b.id !== bill.id)
+  await billService.markAsPaid(bill.id);
+  upcomingBills.value = upcomingBills.value.filter((b) => b.id !== bill.id);
   const [s, cd] = await Promise.all([
     dashboardService.getSummary(),
-    dashboardService.getChartData()
-  ])
-  summary.value = s
-  chartData.value = cd
+    dashboardService.getChartData(),
+  ]);
+  summary.value = s;
+  chartData.value = cd;
 }
 
 function goToEdit(bill) {
-  router.push(`/bills/${bill.id}/edit`)
+  router.push(`/bills/${bill.id}/edit`);
 }
 
 function formatAmount(val) {
-  return Number(val || 0).toLocaleString('id-ID')
+  return Number(val || 0).toLocaleString("id-ID");
 }
 </script>
 
@@ -569,7 +648,9 @@ function formatAmount(val) {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Summary Cards */
@@ -608,10 +689,18 @@ function formatAmount(val) {
   flex-shrink: 0;
 }
 
-.card-total .card-icon { background: rgba(99, 102, 241, 0.1); }
-.card-paid .card-icon { background: rgba(16, 185, 129, 0.1); }
-.card-unpaid .card-icon { background: rgba(245, 158, 11, 0.1); }
-.card-overdue .card-icon { background: rgba(239, 68, 68, 0.1); }
+.card-total .card-icon {
+  background: rgba(99, 102, 241, 0.1);
+}
+.card-paid .card-icon {
+  background: rgba(16, 185, 129, 0.1);
+}
+.card-unpaid .card-icon {
+  background: rgba(245, 158, 11, 0.1);
+}
+.card-overdue .card-icon {
+  background: rgba(239, 68, 68, 0.1);
+}
 
 .card-content {
   display: flex;
@@ -633,10 +722,18 @@ function formatAmount(val) {
   color: #111827;
 }
 
-.card-total .card-value { color: #6366f1; }
-.card-paid .card-value { color: #10b981; }
-.card-unpaid .card-value { color: #f59e0b; }
-.card-overdue .card-value { color: #ef4444; }
+.card-total .card-value {
+  color: #6366f1;
+}
+.card-paid .card-value {
+  color: #10b981;
+}
+.card-unpaid .card-value {
+  color: #f59e0b;
+}
+.card-overdue .card-value {
+  color: #ef4444;
+}
 
 /* Status Badges */
 .status-badges {
@@ -666,19 +763,25 @@ function formatAmount(val) {
   background: rgba(245, 158, 11, 0.1);
   color: #d97706;
 }
-.badge-warning .badge-dot { background: #f59e0b; }
+.badge-warning .badge-dot {
+  background: #f59e0b;
+}
 
 .badge-info {
   background: rgba(59, 130, 246, 0.1);
   color: #2563eb;
 }
-.badge-info .badge-dot { background: #3b82f6; }
+.badge-info .badge-dot {
+  background: #3b82f6;
+}
 
 .badge-success {
   background: rgba(16, 185, 129, 0.1);
   color: #059669;
 }
-.badge-success .badge-dot { background: #10b981; }
+.badge-success .badge-dot {
+  background: #10b981;
+}
 
 /* Charts Section */
 .charts-section {
