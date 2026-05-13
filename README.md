@@ -94,7 +94,9 @@ cd backend
 
 ### 2. Konfigurasi `application.properties`
 
-Edit file `src/main/resources/application.properties`:
+Copy file `src/main/resources/application.example.properties`
+
+Tambahkan file `src/main/resources/application.properties`:
 
 ```properties
 # Sesuaikan dengan konfigurasi PostgreSQL Anda
@@ -113,6 +115,11 @@ spring.mail.username=your-email@gmail.com
 spring.mail.password=your-app-password
 spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
+
+# Fonnte WhatsApp API (untuk fitur reminder via Whatsapp)
+fonnte.api.url=https://api.fonnte.com/send
+fonnte.api.token=YOUR_FONNTE_TOKEN_HERE
+
 ```
 
 > **Catatan Gmail:** Gunakan **App Password** bukan password utama akun Gmail.  
