@@ -4,6 +4,12 @@ Aplikasi manajemen tagihan berbasis web untuk membantu pengguna mencatat, memant
 
 ---
 
+## 🎥 Demo Video
+
+[![Tonton demo di YouTube](https://img.youtube.com/vi/PB0j0kJ_H7A/hqdefault.jpg)](https://www.youtube.com/watch?v=PB0j0kJ_H7A)
+
+---
+
 ## 🧱 Tech Stack
 
 | Layer    | Teknologi                           |
