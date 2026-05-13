@@ -2,24 +2,24 @@
   <div class="auth-page">
     <div class="auth-card">
       <div class="auth-logo">💰</div>
-      <h1 class="auth-title">Bill Reminder</h1>
-      <p class="auth-subtitle">Login ke akun Anda</p>
+      <h1 class="auth-title">{{ $t('appName') }}</h1>
+      <p class="auth-subtitle">{{ $t('auth.loginTitle') }}</p>
 
       <div v-if="error" class="alert alert-danger">{{ error }}</div>
 
       <form @submit.prevent="handleLogin">
         <div class="form-group">
-          <label class="form-label">Email</label>
+          <label class="form-label">{{ $t('auth.email') }}</label>
           <input
             v-model="form.email"
             type="email"
             class="form-control"
-            placeholder="email@contoh.com"
+            :placeholder="$t('auth.emailPlaceholder')"
             required
           />
         </div>
         <div class="form-group">
-          <label class="form-label">Password</label>
+          <label class="form-label">{{ $t('auth.password') }}</label>
           <input
             v-model="form.password"
             type="password"
@@ -33,14 +33,14 @@
           class="btn btn-primary w-full"
           :disabled="authStore.loading"
         >
-          <span v-if="authStore.loading">⏳ Logging in...</span>
-          <span v-else>Login</span>
+          <span v-if="authStore.loading">⏳ {{ $t('auth.loggingIn') }}</span>
+          <span v-else>{{ $t('auth.login') }}</span>
         </button>
       </form>
 
       <p class="auth-footer">
-        Belum punya akun?
-        <RouterLink to="/register">Daftar sekarang</RouterLink>
+        {{ $t('auth.noAccount') }}
+        <RouterLink to="/register">{{ $t('auth.registerNow') }}</RouterLink>
       </p>
     </div>
   </div>
@@ -49,8 +49,10 @@
 <script setup>
 import { ref } from "vue";
 import { RouterLink } from "vue-router";
+import { useI18n } from "vue-i18n";
 import { useAuthStore } from "@/stores/authStore.js";
 
+const { t } = useI18n();
 const authStore = useAuthStore();
 const error = ref("");
 const form = ref({ email: "", password: "" });
@@ -60,9 +62,7 @@ async function handleLogin() {
   try {
     await authStore.login(form.value);
   } catch (e) {
-    error.value =
-      e.response?.data?.error ||
-      "Login gagal. Periksa email dan password Anda.";
+    error.value = e.response?.data?.error || t('auth.loginFailed');
   }
 }
 </script>
@@ -77,7 +77,8 @@ async function handleLogin() {
   padding: 20px;
 }
 .auth-card {
-  background: white;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
   border-radius: 16px;
   padding: 40px;
   width: 100%;
@@ -93,11 +94,11 @@ async function handleLogin() {
   font-size: 26px;
   font-weight: 700;
   text-align: center;
-  color: #1f2937;
+  color: var(--text-primary);
 }
 .auth-subtitle {
   text-align: center;
-  color: #6b7280;
+  color: var(--text-secondary);
   font-size: 14px;
   margin-bottom: 28px;
 }
@@ -109,10 +110,10 @@ async function handleLogin() {
   text-align: center;
   margin-top: 20px;
   font-size: 14px;
-  color: #6b7280;
+  color: var(--text-secondary);
 }
 .auth-footer a {
-  color: #4f46e5;
+  color: var(--primary);
   text-decoration: none;
   font-weight: 500;
 }

@@ -1,4 +1,4 @@
-/* ===== CSS Variables ===== */
+/* ===== CSS Variables - Light Theme ===== */
 :root {
   --primary: #4f46e5;
   --primary-dark: #4338ca;
@@ -11,20 +11,71 @@
   --danger-light: #fee2e2;
   --info: #3b82f6;
   --info-light: #dbeafe;
+
   --text-primary: #1f2937;
   --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
   --border: #e5e7eb;
   --bg-white: #ffffff;
   --bg-gray: #f9fafb;
+  --bg-body: #f0f2f5;
+  --bg-card: #ffffff;
+  --bg-input: #ffffff;
+  --bg-hover: #f3f4f6;
+  --bg-nav: #ffffff;
+  --bg-modal: #ffffff;
+  --bg-dropdown: #ffffff;
+
   --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.1);
   --radius: 8px;
   --radius-lg: 12px;
+
+  --chart-grid: rgba(0, 0, 0, 0.05);
+  --chart-tooltip-bg: rgba(17, 24, 39, 0.9);
+}
+
+/* ===== CSS Variables - Dark Theme ===== */
+:root.dark {
+  --primary: #818cf8;
+  --primary-dark: #6366f1;
+  --primary-light: #312e81;
+  --success: #34d399;
+  --success-light: #064e3b;
+  --warning: #fbbf24;
+  --warning-light: #78350f;
+  --danger: #f87171;
+  --danger-light: #7f1d1d;
+  --info: #60a5fa;
+  --info-light: #1e3a5f;
+
+  --text-primary: #f3f4f6;
+  --text-secondary: #d1d5db;
+  --text-muted: #9ca3af;
+  --border: #374151;
+  --bg-white: #1f2937;
+  --bg-gray: #111827;
+  --bg-body: #0f172a;
+  --bg-card: #1e293b;
+  --bg-input: #1e293b;
+  --bg-hover: #374151;
+  --bg-nav: #1e293b;
+  --bg-modal: #1e293b;
+  --bg-dropdown: #1e293b;
+
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.4);
+
+  --chart-grid: rgba(255, 255, 255, 0.1);
+  --chart-tooltip-bg: rgba(30, 41, 59, 0.95);
 }
 
 body {
   color: var(--text-primary);
-  background-color: #f0f2f5;
+  background-color: var(--bg-body);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* ===== Buttons ===== */
@@ -51,15 +102,17 @@ body {
 .btn-warning { background: var(--warning); color: white; }
 .btn-warning:hover:not(:disabled) { background: #d97706; }
 .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-primary); }
-.btn-outline:hover:not(:disabled) { background: var(--bg-gray); }
+.btn-outline:hover:not(:disabled) { background: var(--bg-hover); }
 .btn-sm { padding: 6px 12px; font-size: 13px; }
 
 /* ===== Cards ===== */
 .card {
-  background: var(--bg-white);
+  background: var(--bg-card);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow);
   padding: 24px;
+  border: 1px solid var(--border);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 /* ===== Form Controls ===== */
@@ -80,8 +133,8 @@ body {
   border-radius: var(--radius);
   font-size: 14px;
   color: var(--text-primary);
-  background: var(--bg-white);
-  transition: border-color 0.2s;
+  background: var(--bg-input);
+  transition: border-color 0.2s, background-color 0.3s;
   outline: none;
 }
 .form-control:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
@@ -94,8 +147,8 @@ body {
   font-size: 14px;
   margin-bottom: 16px;
 }
-.alert-danger { background: var(--danger-light); color: #b91c1c; border: 1px solid #fca5a5; }
-.alert-success { background: var(--success-light); color: #065f46; border: 1px solid #6ee7b7; }
+.alert-danger { background: var(--danger-light); color: var(--danger); border: 1px solid var(--danger); }
+.alert-success { background: var(--success-light); color: var(--success); border: 1px solid var(--success); }
 
 /* ===== Badges ===== */
 .badge {
@@ -107,10 +160,10 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
-.badge-upcoming { background: var(--info-light); color: #1d4ed8; }
-.badge-due-soon { background: var(--warning-light); color: #92400e; }
-.badge-overdue { background: var(--danger-light); color: #991b1b; }
-.badge-paid { background: var(--success-light); color: #065f46; }
+.badge-upcoming { background: var(--info-light); color: var(--info); }
+.badge-due-soon { background: var(--warning-light); color: var(--warning); }
+.badge-overdue { background: var(--danger-light); color: var(--danger); }
+.badge-paid { background: var(--success-light); color: var(--success); }
 
 /* ===== Page Layout ===== */
 .page-container {
@@ -142,6 +195,7 @@ th, td {
   text-align: left;
   border-bottom: 1px solid var(--border);
   font-size: 14px;
+  color: var(--text-primary);
 }
 th {
   font-weight: 600;
@@ -151,7 +205,7 @@ th {
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
-tr:hover td { background: var(--bg-gray); }
+tr:hover td { background: var(--bg-hover); }
 
 /* ===== Loading ===== */
 .loading-spinner {
@@ -191,11 +245,12 @@ tr:hover td { background: var(--bg-gray); }
   padding: 20px;
 }
 .modal {
-  background: white;
+  background: var(--bg-modal);
   border-radius: var(--radius-lg);
   width: 100%;
   max-width: 520px;
-  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
 }
 .modal-header {
   padding: 20px 24px;
@@ -204,7 +259,7 @@ tr:hover td { background: var(--bg-gray); }
   justify-content: space-between;
   align-items: center;
 }
-.modal-title { font-size: 18px; font-weight: 600; }
+.modal-title { font-size: 18px; font-weight: 600; color: var(--text-primary); }
 .modal-close {
   background: none;
   border: none;
@@ -230,10 +285,12 @@ tr:hover td { background: var(--bg-gray); }
   margin-bottom: 24px;
 }
 .stat-card {
-  background: var(--bg-white);
+  background: var(--bg-card);
   border-radius: var(--radius-lg);
   padding: 20px;
   box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 .stat-label { font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; }
 .stat-value { font-size: 28px; font-weight: 700; }
@@ -249,7 +306,8 @@ tr:hover td { background: var(--bg-gray); }
   padding: 8px 16px;
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: white;
+  background: var(--bg-card);
+  color: var(--text-primary);
   font-size: 13px;
   cursor: pointer;
   transition: all 0.2s;
@@ -257,3 +315,6 @@ tr:hover td { background: var(--bg-gray); }
 }
 .filter-btn:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
 .filter-btn.active { background: var(--primary); border-color: var(--primary); color: white; }
+
+/* ===== Utility ===== */
+.text-muted { color: var(--text-muted); }

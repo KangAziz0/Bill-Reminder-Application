@@ -1,8 +1,8 @@
 <template>
   <div class="page-container">
     <div class="page-header">
-      <h1 class="page-title">📋 Daftar Tagihan</h1>
-      <RouterLink to="/bills/new" class="btn btn-primary">+ Tambah Tagihan</RouterLink>
+      <h1 class="page-title">📋 {{ $t('bill.title') }}</h1>
+      <RouterLink to="/bills/new" class="btn btn-primary">+ {{ $t('bill.addBill') }}</RouterLink>
     </div>
 
     <!-- Filters -->
@@ -21,9 +21,9 @@
     <template v-else>
       <div v-if="filteredBills.length === 0" class="empty-state card">
         <div class="icon">📭</div>
-        <h3>Tidak ada tagihan</h3>
-        <p>Tambahkan tagihan pertama Anda!</p>
-        <RouterLink to="/bills/new" class="btn btn-primary" style="margin-top: 16px;">+ Tambah Tagihan</RouterLink>
+        <h3>{{ $t('bill.noBills') }}</h3>
+        <p>{{ $t('bill.addFirstBill') }}</p>
+        <RouterLink to="/bills/new" class="btn btn-primary" style="margin-top: 16px;">+ {{ $t('bill.addBill') }}</RouterLink>
       </div>
 
       <div v-else class="bills-grid">
@@ -42,43 +42,43 @@
     <div v-if="showPayModal" class="modal-overlay" @click.self="showPayModal = false">
       <div class="modal">
         <div class="modal-header">
-          <span class="modal-title">💳 Catat Pembayaran</span>
-          <button class="modal-close" @click="showPayModal = false">×</button>
+          <span class="modal-title">💳 {{ $t('payment.recordPayment') }}</span>
+          <button class="modal-close" @click="showPayModal = false">&times;</button>
         </div>
         <div class="modal-body">
           <p class="pay-bill-name">{{ selectedBill?.title }}</p>
           <p class="pay-bill-amount">Rp {{ formatAmount(selectedBill?.amount) }}</p>
           <div class="form-group">
-            <label class="form-label">Nominal Bayar</label>
+            <label class="form-label">{{ $t('payment.paidAmount') }}</label>
             <input v-model="payForm.paidAmount" type="number" class="form-control" :placeholder="selectedBill?.amount" />
           </div>
           <div class="form-group">
-            <label class="form-label">Tanggal Bayar</label>
+            <label class="form-label">{{ $t('payment.paidDate') }}</label>
             <input v-model="payForm.paidDate" type="date" class="form-control" />
           </div>
           <div class="form-group">
-            <label class="form-label">Metode Pembayaran</label>
+            <label class="form-label">{{ $t('payment.paymentMethod') }}</label>
             <select v-model="payForm.paymentMethod" class="form-control">
-              <option value="">Pilih metode</option>
-              <option value="Transfer Bank">Transfer Bank</option>
-              <option value="Virtual Account">Virtual Account</option>
-              <option value="QRIS">QRIS</option>
-              <option value="Tunai">Tunai</option>
-              <option value="Kartu Kredit">Kartu Kredit</option>
-              <option value="Kartu Debit">Kartu Debit</option>
-              <option value="E-Wallet">E-Wallet</option>
+              <option value="">{{ $t('payment.selectMethod') }}</option>
+              <option value="Transfer Bank">{{ $t('payment.methodTransfer') }}</option>
+              <option value="Virtual Account">{{ $t('payment.methodVA') }}</option>
+              <option value="QRIS">{{ $t('payment.methodQRIS') }}</option>
+              <option value="Tunai">{{ $t('payment.methodCash') }}</option>
+              <option value="Kartu Kredit">{{ $t('payment.methodCC') }}</option>
+              <option value="Kartu Debit">{{ $t('payment.methodDebit') }}</option>
+              <option value="E-Wallet">{{ $t('payment.methodEwallet') }}</option>
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">Catatan (opsional)</label>
-            <textarea v-model="payForm.notes" class="form-control" rows="2" placeholder="Catatan pembayaran..."></textarea>
+            <label class="form-label">{{ $t('payment.notes') }}</label>
+            <textarea v-model="payForm.notes" class="form-control" rows="2" :placeholder="$t('payment.notesPlaceholder')"></textarea>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-outline" @click="showPayModal = false">Batal</button>
+          <button class="btn btn-outline" @click="showPayModal = false">{{ $t('cancel') }}</button>
           <button class="btn btn-success" @click="submitPayment" :disabled="paying">
             <span v-if="paying">⏳</span>
-            <span v-else>✓ Konfirmasi Bayar</span>
+            <span v-else>✓ {{ $t('payment.confirmPay') }}</span>
           </button>
         </div>
       </div>
@@ -88,18 +88,18 @@
     <div v-if="showDeleteModal" class="modal-overlay" @click.self="showDeleteModal = false">
       <div class="modal">
         <div class="modal-header">
-          <span class="modal-title">🗑️ Hapus Tagihan</span>
-          <button class="modal-close" @click="showDeleteModal = false">×</button>
+          <span class="modal-title">🗑️ {{ $t('bill.deleteBill') }}</span>
+          <button class="modal-close" @click="showDeleteModal = false">&times;</button>
         </div>
         <div class="modal-body">
-          <p>Apakah Anda yakin ingin menghapus tagihan <strong>{{ selectedBill?.title }}</strong>?</p>
-          <p style="color: #6b7280; font-size: 13px; margin-top: 8px;">Tindakan ini tidak dapat dibatalkan.</p>
+          <p>{{ $t('bill.deleteConfirm') }} <strong>{{ selectedBill?.title }}</strong>?</p>
+          <p style="color: var(--text-secondary); font-size: 13px; margin-top: 8px;">{{ $t('bill.deleteWarning') }}</p>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-outline" @click="showDeleteModal = false">Batal</button>
+          <button class="btn btn-outline" @click="showDeleteModal = false">{{ $t('cancel') }}</button>
           <button class="btn btn-danger" @click="deleteBill" :disabled="deleting">
             <span v-if="deleting">⏳</span>
-            <span v-else>Hapus</span>
+            <span v-else>{{ $t('delete') }}</span>
           </button>
         </div>
       </div>
@@ -110,10 +110,12 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import BillCard from '@/components/BillCard.vue'
 import billService from '@/services/billService.js'
 import paymentService from '@/services/paymentService.js'
 
+const { t } = useI18n()
 const router = useRouter()
 const bills = ref([])
 const loading = ref(true)
@@ -125,13 +127,13 @@ const paying = ref(false)
 const deleting = ref(false)
 const payForm = ref({ paidAmount: '', paidDate: new Date().toISOString().split('T')[0], paymentMethod: '', notes: '' })
 
-const filterOptions = [
-  { label: '📋 Semua', value: 'ALL' },
-  { label: '📅 Upcoming', value: 'UPCOMING' },
-  { label: '⚠️ Mendekati', value: 'DUE_SOON' },
-  { label: '🚨 Terlambat', value: 'OVERDUE' },
-  { label: '✅ Lunas', value: 'PAID' }
-]
+const filterOptions = computed(() => [
+  { label: `📋 ${t('bill.filterAll')}`, value: 'ALL' },
+  { label: `📅 ${t('bill.filterUpcoming')}`, value: 'UPCOMING' },
+  { label: `⚠️ ${t('bill.filterDueSoon')}`, value: 'DUE_SOON' },
+  { label: `🚨 ${t('bill.filterOverdue')}`, value: 'OVERDUE' },
+  { label: `✅ ${t('bill.filterPaid')}`, value: 'PAID' }
+])
 
 const filteredBills = computed(() =>
   activeFilter.value === 'ALL' ? bills.value : bills.value.filter(b => b.status === activeFilter.value)
@@ -203,6 +205,6 @@ function formatAmount(val) {
 
 <style scoped>
 .bills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
-.pay-bill-name { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
-.pay-bill-amount { font-size: 22px; font-weight: 700; color: #4f46e5; margin-bottom: 20px; }
+.pay-bill-name { font-size: 18px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+.pay-bill-amount { font-size: 22px; font-weight: 700; color: var(--primary); margin-bottom: 20px; }
 </style>

@@ -3,17 +3,17 @@
     <!-- Header -->
     <div class="dashboard-header">
       <div>
-        <h1 class="dashboard-title">Dashboard</h1>
-        <p class="dashboard-subtitle">Ringkasan keuangan & tagihan Anda</p>
+        <h1 class="dashboard-title">{{ $t('dashboard.title') }}</h1>
+        <p class="dashboard-subtitle">{{ $t('dashboard.subtitle') }}</p>
       </div>
       <RouterLink to="/bills/new" class="btn-add">
-        <span class="btn-icon">+</span> Tambah Tagihan
+        <span class="btn-icon">+</span> {{ $t('dashboard.addBill') }}
       </RouterLink>
     </div>
 
     <div v-if="loading" class="loading-state">
       <div class="spinner"></div>
-      <p>Memuat data...</p>
+      <p>{{ $t('loading') }}</p>
     </div>
 
     <template v-else>
@@ -22,29 +22,29 @@
         <div class="summary-card card-total">
           <div class="card-icon">💰</div>
           <div class="card-content">
-            <span class="card-label">Total Tagihan Bulan Ini</span>
+            <span class="card-label">{{ $t('dashboard.totalBillsThisMonth') }}</span>
             <span class="card-value">Rp {{ formatAmount(summary.totalBillsThisMonth) }}</span>
           </div>
         </div>
         <div class="summary-card card-paid">
           <div class="card-icon">✅</div>
           <div class="card-content">
-            <span class="card-label">Sudah Dibayar</span>
+            <span class="card-label">{{ $t('dashboard.paid') }}</span>
             <span class="card-value">Rp {{ formatAmount(summary.totalPaid) }}</span>
           </div>
         </div>
         <div class="summary-card card-unpaid">
           <div class="card-icon">⏳</div>
           <div class="card-content">
-            <span class="card-label">Belum Dibayar</span>
+            <span class="card-label">{{ $t('dashboard.unpaid') }}</span>
             <span class="card-value">Rp {{ formatAmount(summary.totalUnpaid) }}</span>
           </div>
         </div>
         <div class="summary-card card-overdue">
           <div class="card-icon">🚨</div>
           <div class="card-content">
-            <span class="card-label">Terlambat</span>
-            <span class="card-value">{{ summary.overdueCount }} tagihan</span>
+            <span class="card-label">{{ $t('dashboard.overdue') }}</span>
+            <span class="card-value">{{ summary.overdueCount }} {{ $t('dashboard.bills') }}</span>
           </div>
         </div>
       </div>
@@ -53,15 +53,15 @@
       <div class="status-badges">
         <div class="badge badge-warning">
           <span class="badge-dot"></span>
-          <span>{{ summary.dueSoonCount }} Mendekati Jatuh Tempo</span>
+          <span>{{ summary.dueSoonCount }} {{ $t('dashboard.dueSoon') }}</span>
         </div>
         <div class="badge badge-info">
           <span class="badge-dot"></span>
-          <span>{{ summary.upcomingCount }} Akan Datang</span>
+          <span>{{ summary.upcomingCount }} {{ $t('dashboard.upcoming') }}</span>
         </div>
         <div class="badge badge-success">
           <span class="badge-dot"></span>
-          <span>{{ summary.paidCount }} Lunas</span>
+          <span>{{ summary.paidCount }} {{ $t('dashboard.paidBills') }}</span>
         </div>
       </div>
 
@@ -70,48 +70,48 @@
         <!-- Line Chart - Monthly Trends -->
         <div class="chart-card chart-wide">
           <div class="chart-header">
-            <h3 class="chart-title">Tren Tagihan & Pembayaran (6 Bulan)</h3>
-            <span class="chart-badge">Line Chart</span>
+            <h3 class="chart-title">{{ $t('dashboard.monthlyTrend') }}</h3>
+            <span class="chart-badge">{{ $t('dashboard.lineChart') }}</span>
           </div>
           <div class="chart-body">
             <Line v-if="lineChartData" :data="lineChartData" :options="lineChartOptions" />
-            <div v-else class="chart-empty">Belum ada data tren</div>
+            <div v-else class="chart-empty">{{ $t('dashboard.noTrendData') }}</div>
           </div>
         </div>
 
         <!-- Pie Chart - Category Breakdown -->
         <div class="chart-card">
           <div class="chart-header">
-            <h3 class="chart-title">Distribusi Kategori</h3>
-            <span class="chart-badge">Pie Chart</span>
+            <h3 class="chart-title">{{ $t('dashboard.categoryDistribution') }}</h3>
+            <span class="chart-badge">{{ $t('dashboard.pieChart') }}</span>
           </div>
           <div class="chart-body chart-body-pie">
             <Pie v-if="pieChartData" :data="pieChartData" :options="pieChartOptions" />
-            <div v-else class="chart-empty">Belum ada data kategori</div>
+            <div v-else class="chart-empty">{{ $t('dashboard.noCategoryData') }}</div>
           </div>
         </div>
 
         <!-- Doughnut Chart - Status Distribution -->
         <div class="chart-card">
           <div class="chart-header">
-            <h3 class="chart-title">Status Tagihan</h3>
-            <span class="chart-badge">Doughnut</span>
+            <h3 class="chart-title">{{ $t('dashboard.statusDistribution') }}</h3>
+            <span class="chart-badge">{{ $t('dashboard.doughnut') }}</span>
           </div>
           <div class="chart-body chart-body-pie">
             <Doughnut v-if="doughnutChartData" :data="doughnutChartData" :options="doughnutChartOptions" />
-            <div v-else class="chart-empty">Belum ada data status</div>
+            <div v-else class="chart-empty">{{ $t('dashboard.noStatusData') }}</div>
           </div>
         </div>
 
         <!-- Stacked Bar Chart - Monthly Comparison -->
         <div class="chart-card chart-wide">
           <div class="chart-header">
-            <h3 class="chart-title">Perbandingan Tagihan vs Pembayaran</h3>
-            <span class="chart-badge">Stacked Bar</span>
+            <h3 class="chart-title">{{ $t('dashboard.billVsPayment') }}</h3>
+            <span class="chart-badge">{{ $t('dashboard.stackedBar') }}</span>
           </div>
           <div class="chart-body">
             <Bar v-if="barChartData" :data="barChartData" :options="barChartOptions" />
-            <div v-else class="chart-empty">Belum ada data perbandingan</div>
+            <div v-else class="chart-empty">{{ $t('dashboard.noComparisonData') }}</div>
           </div>
         </div>
       </div>
@@ -119,14 +119,14 @@
       <!-- Upcoming Bills -->
       <div class="upcoming-section">
         <div class="section-header">
-          <h2 class="section-title">📅 Tagihan Mendekati Jatuh Tempo</h2>
-          <RouterLink to="/bills" class="btn-link">Lihat Semua →</RouterLink>
+          <h2 class="section-title">📅 {{ $t('dashboard.upcomingBillsTitle') }}</h2>
+          <RouterLink to="/bills" class="btn-link">{{ $t('viewAll') }} →</RouterLink>
         </div>
 
         <div v-if="upcomingBills.length === 0" class="empty-state">
           <div class="empty-icon">🎉</div>
-          <h3>Tidak ada tagihan mendekati jatuh tempo</h3>
-          <p>Semua tagihan Anda aman!</p>
+          <h3>{{ $t('dashboard.noUpcomingBills') }}</h3>
+          <p>{{ $t('dashboard.allSafe') }}</p>
         </div>
 
         <div v-else class="bills-list">
@@ -147,6 +147,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -179,6 +180,7 @@ ChartJS.register(
   Filler
 )
 
+const { t } = useI18n()
 const router = useRouter()
 const loading = ref(true)
 const summary = ref({
@@ -200,17 +202,8 @@ const colors = {
   success: '#10b981',
   successLight: 'rgba(16, 185, 129, 0.1)',
   warning: '#f59e0b',
-  warningLight: 'rgba(245, 158, 11, 0.1)',
   danger: '#ef4444',
-  dangerLight: 'rgba(239, 68, 68, 0.1)',
-  info: '#3b82f6',
-  infoLight: 'rgba(59, 130, 246, 0.1)',
-  purple: '#8b5cf6',
-  pink: '#ec4899',
-  teal: '#14b8a6',
-  orange: '#f97316',
-  cyan: '#06b6d4',
-  lime: '#84cc16'
+  info: '#3b82f6'
 }
 
 const categoryColors = [
@@ -226,23 +219,16 @@ const statusColorMap = {
   'OVERDUE': '#ef4444'
 }
 
-const statusLabelMap = {
-  'PAID': 'Lunas',
-  'UPCOMING': 'Akan Datang',
-  'DUE_SOON': 'Mendekati Jatuh Tempo',
-  'OVERDUE': 'Terlambat'
-}
-
 // Chart data computations
 const lineChartData = computed(() => {
   if (!chartData.value || !chartData.value.monthlyTrends || chartData.value.monthlyTrends.length === 0) return null
   const trends = chartData.value.monthlyTrends
   return {
-    labels: trends.map(t => t.month),
+    labels: trends.map(item => item.month),
     datasets: [
       {
-        label: 'Total Tagihan',
-        data: trends.map(t => Number(t.totalBills)),
+        label: t('dashboard.totalBills'),
+        data: trends.map(item => Number(item.totalBills)),
         borderColor: colors.primary,
         backgroundColor: colors.primaryLight,
         fill: true,
@@ -254,8 +240,8 @@ const lineChartData = computed(() => {
         pointHoverRadius: 7
       },
       {
-        label: 'Total Dibayar',
-        data: trends.map(t => Number(t.totalPaid)),
+        label: t('dashboard.totalPaid'),
+        data: trends.map(item => Number(item.totalPaid)),
         borderColor: colors.success,
         backgroundColor: colors.successLight,
         fill: true,
@@ -277,7 +263,7 @@ const lineChartOptions = {
   plugins: {
     legend: {
       position: 'top',
-      labels: { usePointStyle: true, padding: 20, font: { size: 12, weight: '500' } }
+      labels: { usePointStyle: true, padding: 20, font: { size: 12, weight: '500' }, color: 'inherit' }
     },
     tooltip: {
       backgroundColor: 'rgba(17, 24, 39, 0.9)',
@@ -293,10 +279,7 @@ const lineChartOptions = {
     }
   },
   scales: {
-    x: {
-      grid: { display: false },
-      ticks: { font: { size: 11 } }
-    },
+    x: { grid: { display: false }, ticks: { font: { size: 11 } } },
     y: {
       grid: { color: 'rgba(0,0,0,0.05)' },
       ticks: {
@@ -353,7 +336,7 @@ const doughnutChartData = computed(() => {
   if (!chartData.value || !chartData.value.statusDistribution || chartData.value.statusDistribution.length === 0) return null
   const statuses = chartData.value.statusDistribution
   return {
-    labels: statuses.map(s => statusLabelMap[s.status] || s.status),
+    labels: statuses.map(s => t(`status.${s.status === 'DUE_SOON' ? 'dueSoon' : s.status.toLowerCase()}`)),
     datasets: [{
       data: statuses.map(s => s.count),
       backgroundColor: statuses.map(s => statusColorMap[s.status] || '#9ca3af'),
@@ -381,7 +364,7 @@ const doughnutChartOptions = {
         label: function(context) {
           const total = context.dataset.data.reduce((a, b) => a + b, 0)
           const percentage = ((context.raw / total) * 100).toFixed(1)
-          return `${context.label}: ${context.raw} tagihan (${percentage}%)`
+          return `${context.label}: ${context.raw} (${percentage}%)`
         }
       }
     }
@@ -392,11 +375,11 @@ const barChartData = computed(() => {
   if (!chartData.value || !chartData.value.monthlyTrends || chartData.value.monthlyTrends.length === 0) return null
   const trends = chartData.value.monthlyTrends
   return {
-    labels: trends.map(t => t.month),
+    labels: trends.map(item => item.month),
     datasets: [
       {
-        label: 'Tagihan',
-        data: trends.map(t => Number(t.totalBills)),
+        label: t('dashboard.billsLabel'),
+        data: trends.map(item => Number(item.totalBills)),
         backgroundColor: 'rgba(99, 102, 241, 0.8)',
         borderColor: colors.primary,
         borderWidth: 1,
@@ -404,8 +387,8 @@ const barChartData = computed(() => {
         borderSkipped: false
       },
       {
-        label: 'Dibayar',
-        data: trends.map(t => Number(t.totalPaid)),
+        label: t('dashboard.paidLabel'),
+        data: trends.map(item => Number(item.totalPaid)),
         backgroundColor: 'rgba(16, 185, 129, 0.8)',
         borderColor: colors.success,
         borderWidth: 1,
@@ -437,11 +420,7 @@ const barChartOptions = {
     }
   },
   scales: {
-    x: {
-      stacked: true,
-      grid: { display: false },
-      ticks: { font: { size: 11 } }
-    },
+    x: { stacked: true, grid: { display: false }, ticks: { font: { size: 11 } } },
     y: {
       stacked: true,
       grid: { color: 'rgba(0,0,0,0.05)' },
@@ -496,7 +475,6 @@ function formatAmount(val) {
 </script>
 
 <style scoped>
-/* Dashboard Layout */
 .dashboard {
   max-width: 1200px;
   margin: 0 auto;
@@ -513,13 +491,13 @@ function formatAmount(val) {
 .dashboard-title {
   font-size: 28px;
   font-weight: 800;
-  color: #111827;
+  color: var(--text-primary);
   margin: 0;
 }
 
 .dashboard-subtitle {
   font-size: 14px;
-  color: #6b7280;
+  color: var(--text-secondary);
   margin: 4px 0 0 0;
 }
 
@@ -543,33 +521,16 @@ function formatAmount(val) {
   box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
 }
 
-.btn-icon {
-  font-size: 18px;
-  font-weight: 700;
-}
+.btn-icon { font-size: 18px; font-weight: 700; }
 
-/* Loading State */
+/* Loading */
 .loading-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 80px 0;
-  color: #6b7280;
-}
-
-.spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid #e5e7eb;
-  border-top-color: #6366f1;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin-bottom: 12px;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
+  color: var(--text-secondary);
 }
 
 /* Summary Cards */
@@ -586,15 +547,15 @@ function formatAmount(val) {
   gap: 16px;
   padding: 20px;
   border-radius: 14px;
-  background: #fff;
-  border: 1px solid #f3f4f6;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
   transition: all 0.2s ease;
 }
 
 .summary-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-lg);
 }
 
 .card-icon {
@@ -613,30 +574,21 @@ function formatAmount(val) {
 .card-unpaid .card-icon { background: rgba(245, 158, 11, 0.1); }
 .card-overdue .card-icon { background: rgba(239, 68, 68, 0.1); }
 
-.card-content {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
+.card-content { display: flex; flex-direction: column; gap: 4px; }
 
 .card-label {
   font-size: 12px;
   font-weight: 500;
-  color: #6b7280;
+  color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.card-value {
-  font-size: 18px;
-  font-weight: 700;
-  color: #111827;
-}
-
-.card-total .card-value { color: #6366f1; }
-.card-paid .card-value { color: #10b981; }
-.card-unpaid .card-value { color: #f59e0b; }
-.card-overdue .card-value { color: #ef4444; }
+.card-value { font-size: 18px; font-weight: 700; color: var(--text-primary); }
+.card-total .card-value { color: var(--primary); }
+.card-paid .card-value { color: var(--success); }
+.card-unpaid .card-value { color: var(--warning); }
+.card-overdue .card-value { color: var(--danger); }
 
 /* Status Badges */
 .status-badges {
@@ -646,7 +598,7 @@ function formatAmount(val) {
   margin-bottom: 32px;
 }
 
-.badge {
+.status-badges .badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -662,25 +614,14 @@ function formatAmount(val) {
   border-radius: 50%;
 }
 
-.badge-warning {
-  background: rgba(245, 158, 11, 0.1);
-  color: #d97706;
-}
-.badge-warning .badge-dot { background: #f59e0b; }
+.badge-warning { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+.badge-warning .badge-dot { background: var(--warning); }
+.badge-info { background: rgba(59, 130, 246, 0.1); color: var(--info); }
+.badge-info .badge-dot { background: var(--info); }
+.badge-success { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+.badge-success .badge-dot { background: var(--success); }
 
-.badge-info {
-  background: rgba(59, 130, 246, 0.1);
-  color: #2563eb;
-}
-.badge-info .badge-dot { background: #3b82f6; }
-
-.badge-success {
-  background: rgba(16, 185, 129, 0.1);
-  color: #059669;
-}
-.badge-success .badge-dot { background: #10b981; }
-
-/* Charts Section */
+/* Charts */
 .charts-section {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -689,21 +630,16 @@ function formatAmount(val) {
 }
 
 .chart-card {
-  background: #fff;
+  background: var(--bg-card);
   border-radius: 14px;
-  border: 1px solid #f3f4f6;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
   overflow: hidden;
   transition: all 0.2s ease;
 }
 
-.chart-card:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-}
-
-.chart-wide {
-  grid-column: span 2;
-}
+.chart-card:hover { box-shadow: var(--shadow-lg); }
+.chart-wide { grid-column: span 2; }
 
 .chart-header {
   display: flex;
@@ -715,7 +651,7 @@ function formatAmount(val) {
 .chart-title {
   font-size: 15px;
   font-weight: 600;
-  color: #111827;
+  color: var(--text-primary);
   margin: 0;
 }
 
@@ -724,8 +660,8 @@ function formatAmount(val) {
   font-weight: 600;
   padding: 4px 10px;
   border-radius: 6px;
-  background: rgba(99, 102, 241, 0.1);
-  color: #6366f1;
+  background: var(--primary-light);
+  color: var(--primary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -748,18 +684,19 @@ function formatAmount(val) {
   align-items: center;
   justify-content: center;
   height: 100%;
-  color: #9ca3af;
+  color: var(--text-muted);
   font-size: 14px;
   font-style: italic;
 }
 
-/* Upcoming Bills Section */
+/* Upcoming Bills */
 .upcoming-section {
-  background: #fff;
+  background: var(--bg-card);
   border-radius: 14px;
-  border: 1px solid #f3f4f6;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
   padding: 24px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .section-header {
@@ -772,47 +709,25 @@ function formatAmount(val) {
 .section-title {
   font-size: 18px;
   font-weight: 700;
-  color: #111827;
+  color: var(--text-primary);
   margin: 0;
 }
 
 .btn-link {
   font-size: 13px;
   font-weight: 600;
-  color: #6366f1;
+  color: var(--primary);
   text-decoration: none;
   transition: color 0.2s;
 }
 
-.btn-link:hover {
-  color: #4f46e5;
-}
+.btn-link:hover { color: var(--primary-dark); }
 
-/* Empty State */
-.empty-state {
-  text-align: center;
-  padding: 40px 20px;
-}
+.empty-state { text-align: center; padding: 40px 20px; }
+.empty-icon { font-size: 48px; margin-bottom: 12px; }
+.empty-state h3 { font-size: 16px; font-weight: 600; color: var(--text-primary); margin: 0 0 6px; }
+.empty-state p { font-size: 14px; color: var(--text-secondary); margin: 0; }
 
-.empty-icon {
-  font-size: 48px;
-  margin-bottom: 12px;
-}
-
-.empty-state h3 {
-  font-size: 16px;
-  font-weight: 600;
-  color: #374151;
-  margin: 0 0 6px;
-}
-
-.empty-state p {
-  font-size: 14px;
-  color: #6b7280;
-  margin: 0;
-}
-
-/* Bills List */
 .bills-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -821,48 +736,18 @@ function formatAmount(val) {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .dashboard {
-    padding: 16px;
-  }
-
-  .dashboard-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-  }
-
-  .summary-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .charts-section {
-    grid-template-columns: 1fr;
-  }
-
-  .chart-wide {
-    grid-column: span 1;
-  }
-
-  .status-badges {
-    flex-direction: column;
-  }
-
-  .bills-list {
-    grid-template-columns: 1fr;
-  }
+  .dashboard { padding: 16px; }
+  .dashboard-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .summary-grid { grid-template-columns: 1fr; }
+  .charts-section { grid-template-columns: 1fr; }
+  .chart-wide { grid-column: span 1; }
+  .status-badges { flex-direction: column; }
+  .bills-list { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 480px) {
-  .dashboard-title {
-    font-size: 22px;
-  }
-
-  .card-value {
-    font-size: 16px;
-  }
-
-  .chart-body {
-    height: 220px;
-  }
+  .dashboard-title { font-size: 22px; }
+  .card-value { font-size: 16px; }
+  .chart-body { height: 220px; }
 }
 </style>
