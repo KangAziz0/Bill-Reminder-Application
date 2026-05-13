@@ -9,6 +9,11 @@ const dashboardService = {
   async getUpcomingBills() {
     const response = await api.get('/dashboard/upcoming-bills')
     return response.data
+  },
+
+  async getChartData() {
+    const response = await api.get('/dashboard/charts')
+    return response.data
   }
 }
 
