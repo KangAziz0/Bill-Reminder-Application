@@ -4,5 +4,6 @@ node_modules/
 
 # Env files
 **/.env
+backend/src/main/resources/application.properties
 
 .vscode

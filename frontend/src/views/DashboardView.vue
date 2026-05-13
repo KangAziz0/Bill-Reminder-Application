@@ -481,7 +481,6 @@ const barChartData = computed(() => {
         backgroundColor: "rgba(99, 102, 241, 0.8)",
         borderColor: colors.primary,
         borderWidth: 1,
-        borderRadius: 6,
         borderSkipped: false,
       },
       {
@@ -490,7 +489,6 @@ const barChartData = computed(() => {
         backgroundColor: "rgba(16, 185, 129, 0.8)",
         borderColor: colors.success,
         borderWidth: 1,
-        borderRadius: 6,
         borderSkipped: false,
       },
     ],

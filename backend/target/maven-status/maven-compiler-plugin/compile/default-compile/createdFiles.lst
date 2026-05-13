@@ -8,6 +8,7 @@ com\example\billreminder\dto\BillResponse$BillResponseBuilder.class
 com\example\billreminder\dto\DashboardSummaryResponse$DashboardSummaryResponseBuilder.class
 com\example\billreminder\dto\LoginRequest.class
 com\example\billreminder\dto\DashboardChartResponse$CategoryBreakdown$CategoryBreakdownBuilder.class
+com\example\billreminder\controller\DashboardController.class
 com\example\billreminder\repository\NotificationRepository.class
 com\example\billreminder\repository\BillRepository.class
 com\example\billreminder\BillReminderApplication.class
@@ -29,6 +30,7 @@ com\example\billreminder\dto\BillResponse.class
 com\example\billreminder\dto\RegisterRequest.class
 com\example\billreminder\config\JwtAuthenticationFilter.class
 com\example\billreminder\config\SecurityConfig.class
+com\example\billreminder\service\WhatsAppService.class
 com\example\billreminder\dto\PaymentResponse.class
 com\example\billreminder\entity\Bill.class
 com\example\billreminder\dto\DashboardChartResponse$CategoryBreakdown.class
