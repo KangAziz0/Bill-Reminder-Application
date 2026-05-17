@@ -20,10 +20,22 @@ public class AuthService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+    private final OtpService otpService;
+    private final EmailService emailService;
 
     public AuthResponse register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already in use");
+        }
+
+        if (request.getOtp() == null || request.getOtp().isBlank()) {
+            String otp = otpService.generateOtpWithRateLimit("register", request.getEmail(), false);
+            emailService.sendOtpEmail(request.getEmail(), otp, "registrasi akun");
+            throw new RuntimeException("OTP_REQUIRED: OTP telah dikirim ke email. Masukkan OTP untuk melanjutkan registrasi.");
+        }
+
+        if (!otpService.verifyOtp("register", request.getEmail(), request.getOtp())) {
+            throw new RuntimeException("OTP tidak valid atau kedaluwarsa.");
         }
 
         User user = User.builder()
@@ -35,15 +47,7 @@ public class AuthService implements UserDetailsService {
 
         userRepository.save(user);
         String token = jwtUtil.generateToken(user);
-
-        return AuthResponse.builder()
-                .token(token)
-                .type("Bearer")
-                .id(user.getId())
-                .name(user.getName())
-                .email(user.getEmail())
-                .phoneNumber(user.getPhoneNumber())
-                .build();
+        return buildAuthResponse(user, token);
     }
 
     public AuthResponse login(LoginRequest request) {
@@ -54,8 +58,28 @@ public class AuthService implements UserDetailsService {
             throw new RuntimeException("Invalid email or password");
         }
 
-        String token = jwtUtil.generateToken(user);
+        if (request.getOtp() == null || request.getOtp().isBlank()) {
+            String otp = otpService.generateOtpWithRateLimit("login", request.getEmail(), false);
+            emailService.sendOtpEmail(request.getEmail(), otp, "login akun");
+            throw new RuntimeException("OTP_REQUIRED: OTP telah dikirim ke email. Masukkan OTP untuk melanjutkan login.");
+        }
 
+        if (!otpService.verifyOtp("login", request.getEmail(), request.getOtp())) {
+            throw new RuntimeException("OTP tidak valid atau kedaluwarsa.");
+        }
+
+        String token = jwtUtil.generateToken(user);
+        return buildAuthResponse(user, token);
+    }
+
+    public void resendOtp(String purpose, String email) {
+        String normalizedPurpose = "register".equalsIgnoreCase(purpose) ? "register" : "login";
+        String otp = otpService.generateOtpWithRateLimit(normalizedPurpose, email, true);
+        String label = "register".equals(normalizedPurpose) ? "registrasi akun" : "login akun";
+        emailService.sendOtpEmail(email, otp, label);
+    }
+
+    private AuthResponse buildAuthResponse(User user, String token) {
         return AuthResponse.builder()
                 .token(token)
                 .type("Bearer")

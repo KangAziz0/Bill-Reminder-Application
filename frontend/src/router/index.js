@@ -5,11 +5,13 @@ import DashboardView from '@/views/DashboardView.vue'
 import BillListView from '@/views/BillListView.vue'
 import BillFormView from '@/views/BillFormView.vue'
 import PaymentHistoryView from '@/views/PaymentHistoryView.vue'
+import OtpVerificationView from '@/views/OtpVerificationView.vue'
 
 const routes = [
   { path: '/', redirect: '/dashboard' },
   { path: '/login', component: LoginView, meta: { guest: true } },
   { path: '/register', component: RegisterView, meta: { guest: true } },
+  { path: '/otp', component: OtpVerificationView, meta: { guest: true } },
   { path: '/dashboard', component: DashboardView, meta: { requiresAuth: true } },
   { path: '/bills', component: BillListView, meta: { requiresAuth: true } },
   { path: '/bills/new', component: BillFormView, meta: { requiresAuth: true } },
