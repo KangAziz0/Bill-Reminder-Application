@@ -3,6 +3,7 @@ package com.example.billreminder.controller;
 import com.example.billreminder.dto.AuthResponse;
 import com.example.billreminder.dto.LoginRequest;
 import com.example.billreminder.dto.RegisterRequest;
+import com.example.billreminder.dto.ResendOtpRequest;
 import com.example.billreminder.entity.User;
 import com.example.billreminder.service.AuthService;
 import jakarta.validation.Valid;
@@ -28,6 +29,13 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));
+    }
+
+
+    @PostMapping("/resend-otp")
+    public ResponseEntity<?> resendOtp(@Valid @RequestBody ResendOtpRequest request) {
+        authService.resendOtp(request.getPurpose(), request.getEmail());
+        return ResponseEntity.ok(Map.of("message", "OTP berhasil dikirim ulang"));
     }
 
     @GetMapping("/me")

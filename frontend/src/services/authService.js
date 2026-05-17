@@ -11,6 +11,11 @@ const authService = {
     return response.data
   },
 
+  async resendOtp(data) {
+    const response = await api.post('/auth/resend-otp', data)
+    return response.data
+  },
+
   async getMe() {
     const response = await api.get('/auth/me')
     return response.data
