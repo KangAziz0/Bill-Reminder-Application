@@ -70,7 +70,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/authStore.js'
 import { useTheme } from '@/composables/useTheme.js'
@@ -79,6 +79,7 @@ import notificationService from '@/services/notificationService.js'
 const { locale } = useI18n()
 const { isDark, toggleTheme } = useTheme()
 const authStore = useAuthStore()
+const router = useRouter()
 const notifications = ref([])
 const unreadCount = ref(0)
 const showNotifications = ref(false)
@@ -103,16 +104,18 @@ function toggleNotifications() {
 
 async function markAllRead() {
   await notificationService.markAllRead()
-  notifications.value.forEach(n => n.isRead = true)
+  notifications.value = notifications.value.filter(n => n.isRead)
   unreadCount.value = 0
 }
 
 async function handleNotifClick(notif) {
   if (!notif.isRead) {
     await notificationService.markRead(notif.id)
-    notif.isRead = true
+    notifications.value = notifications.value.filter(n => n.id !== notif.id)
     unreadCount.value = Math.max(0, unreadCount.value - 1)
   }
+  showNotifications.value = false
+  router.push('/bills')
 }
 
 function formatDate(dt) {
@@ -215,12 +218,15 @@ function formatDate(dt) {
 /* Notifications */
 .notif-btn {
   position: relative;
-  background: none;
-  border: none;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
   font-size: 20px;
   cursor: pointer;
-  padding: 4px;
+  padding: 6px 10px;
+  transition: all 0.2s;
 }
+.notif-btn:hover { background: var(--bg-hover); border-color: var(--primary); }
 .badge-notif {
   position: absolute;
   top: -2px;
@@ -275,6 +281,7 @@ function formatDate(dt) {
   color: var(--primary);
   cursor: pointer;
 }
+.mark-read-btn:hover { text-decoration: underline; }
 .notif-item {
   padding: 12px 16px;
   border-bottom: 1px solid var(--border);
