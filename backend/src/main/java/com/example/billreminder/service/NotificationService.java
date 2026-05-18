@@ -34,15 +34,15 @@ public class NotificationService {
     @Transactional
     public void markAllAsRead(User user) {
         List<Notification> unread = notificationRepository.findByUserAndIsReadFalseOrderByCreatedAtDesc(user);
-        unread.forEach(n -> n.setIsRead(true));
-        notificationRepository.saveAll(unread);
+        notificationRepository.deleteAll(unread);
     }
 
     @Transactional
-    public void markAsRead(Long id) {
+    public void markAsRead(Long id, User user) {
         notificationRepository.findById(id).ifPresent(n -> {
-            n.setIsRead(true);
-            notificationRepository.save(n);
+            if (n.getUser() != null && n.getUser().getId().equals(user.getId())) {
+                notificationRepository.delete(n);
+            }
         });
     }
 
